@@ -12,7 +12,7 @@ namespace MontyHallKata
 
         private void RandomlyAssignDoors()
         {
-            Doors = new IDoor[] {new GoatDoor(), new GoatDoor(), new GoatDoor() };
+            Doors = new IDoor[] {new CarDoor(), new GoatDoor(), new GoatDoor() };
         }
     }
 }
