@@ -1,3 +1,4 @@
+using MontyHallKata;
 using Xunit;
 
 namespace MontyHallTests
@@ -13,7 +14,7 @@ namespace MontyHallTests
             
             // Act
             simulation.Start();
-            var doors = simulation.doors;
+            var doors = simulation.Doors;
 
             // Assert
             Assert.Equal(expectedDoors, doors.Length);
