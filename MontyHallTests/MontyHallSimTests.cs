@@ -14,7 +14,7 @@ namespace MontyHallTests
             var expectedDoors = 3;
             
             // Act
-            simulation.Start();
+            simulation.SetUp();
             var doors = simulation.Doors;
 
             // Assert
@@ -29,7 +29,7 @@ namespace MontyHallTests
             var expectedCarDoors = 1;
             
             // Act
-            simulation.Start();
+            simulation.SetUp();
             var doors = simulation.Doors;
             var carDoors = doors.Where(door => door.GetType() == typeof(CarDoor));
 

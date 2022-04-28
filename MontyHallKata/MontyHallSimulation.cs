@@ -5,12 +5,12 @@ namespace MontyHallKata
         public IDoor[] Doors = System.Array.Empty<IDoor>();
 
 
-        public void Start()
+        public void SetUp()
         {
-            RandomlyAssignDoors();
+            PopulateDoors();
         }
 
-        private void RandomlyAssignDoors()
+        private void PopulateDoors()
         {
             Doors = new IDoor[] {new CarDoor(), new GoatDoor(), new GoatDoor() };
         }
