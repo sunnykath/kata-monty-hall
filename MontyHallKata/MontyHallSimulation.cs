@@ -8,8 +8,10 @@ namespace MontyHallKata
     {
         private readonly IDoor[] _defaultDoors = {new CarDoor(), new GoatDoor(), new GoatDoor()};
 
-        public List<IDoor> RandomlyOrderedDoors;
-        
+        public int? SelectedDoor { get; private set; } = null;
+
+        public readonly List<IDoor> RandomlyOrderedDoors;
+
         public MontyHallSimulation()
         {
             RandomlyOrderedDoors = GetRandomlyPopulateDoors();
@@ -19,6 +21,12 @@ namespace MontyHallKata
         {
             var random = new Random();
             return _defaultDoors.OrderBy(_ => random.Next()).ToList();
+        }
+
+
+        public void SelectDoor(int selectedDoor)
+        {
+            SelectedDoor = selectedDoor;
         }
     }
 }
