@@ -51,19 +51,22 @@ namespace MontyHallTests
         }
         
         [Fact]
-        public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToGetOneOfTheGoatDoors()
+        public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToGetOneOfTheGoatDoorsFromTheIntialListOfDoors()
         {
             // Arrange
             var simulation = new MontyHallSimulation();
             const int doorSelection = 1;
+            const int expectedRemainingDoors = 2;
             
             // Act
             simulation.SelectDoor(doorSelection);
             var goatDoor = simulation.GetAGoatDoor();
+            var actualRemainingDoors =simulation.RandomlyOrderedDoors;
             
 
             // Assert
-            Assert.Equal(GoatDoor, goatDoor.GetType());
+            Assert.Equal(typeof(GoatDoor), goatDoor.GetType());
+            Assert.Equal(expectedRemainingDoors, actualRemainingDoors.Count);
         }
     }
 }
