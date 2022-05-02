@@ -33,5 +33,22 @@ namespace MontyHallTests
             // Assert
             Assert.Single(carDoors);
         }
+        
+        [Fact]
+        public void GivenASimulation_WhenThreeDoorsAreCreated_ThenTheUserShouldBeAbleToSelectOne()
+        {
+            // Arrange
+            var simulation = new MontyHallSimulation();
+            const int expectedSelectedDoor = 1;
+            
+            // Act
+            simulation.SelectDoor(expectedSelectedDoor);
+            var actualSelectedDoor = simulation.SelectedDoor;
+            
+
+            // Assert
+            Assert.Equal(expectedSelectedDoor, actualSelectedDoor);
+        }
+        
     }
 }
