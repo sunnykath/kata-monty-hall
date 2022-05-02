@@ -1,18 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace MontyHallKata
 {
     public class MontyHallSimulation
     {
-        public IDoor[] Doors = System.Array.Empty<IDoor>();
+        private readonly IDoor[] _defaultDoors = {new CarDoor(), new GoatDoor(), new GoatDoor()};
 
-
-        public void SetUp()
+        public List<IDoor> RandomlyOrderedDoors;
+        
+        public MontyHallSimulation()
         {
-            PopulateDoors();
+            RandomlyOrderedDoors = GetRandomlyPopulateDoors();
         }
 
-        private void PopulateDoors()
+        private List<IDoor> GetRandomlyPopulateDoors()
         {
-            Doors = new IDoor[] {new CarDoor(), new GoatDoor(), new GoatDoor() };
+            var random = new Random();
+            return _defaultDoors.OrderBy(_ => random.Next()).ToList();
         }
     }
 }

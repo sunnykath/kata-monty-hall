@@ -7,34 +7,31 @@ namespace MontyHallTests
     public class MontyHallSimTests
     {
         [Fact]
-        public void GivenASimulation_WhenStarted_ThenThreeDoorsAreCreated()
+        public void GivenASimulation_WhenCreated_ThenThreeDoorsAreCreated()
         {
             // Arrange
-            var simulation = new MontyHallSimulation();
-            var expectedDoors = 3;
+            const int expectedDoors = 3;
             
             // Act
-            simulation.SetUp();
-            var doors = simulation.Doors;
+            var simulation = new MontyHallSimulation();
+            var doors = simulation.RandomlyOrderedDoors;
 
             // Assert
-            Assert.Equal(expectedDoors, doors.Length);
+            Assert.Equal(expectedDoors, doors.Count);
         }
         
         [Fact]
-        public void GivenAStartedSimulation_WhenThreeDoorsAreCreated_ThenThereIsExactlyOneCarDoor()
+        public void GivenASimulation_WhenThreeDoorsAreCreated_ThenThereIsExactlyOneCarDoor()
         {
             // Arrange
             var simulation = new MontyHallSimulation();
-            var expectedCarDoors = 1;
             
             // Act
-            simulation.SetUp();
-            var doors = simulation.Doors;
+            var doors = simulation.RandomlyOrderedDoors;
             var carDoors = doors.Where(door => door.GetType() == typeof(CarDoor));
 
             // Assert
-            Assert.Equal(expectedCarDoors, carDoors.Count());
+            Assert.Single(carDoors);
         }
     }
 }
