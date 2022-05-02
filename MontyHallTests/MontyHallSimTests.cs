@@ -50,5 +50,20 @@ namespace MontyHallTests
             Assert.Equal(expectedSelectedDoor, actualSelectedDoor);
         }
         
+        [Fact]
+        public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToGetOneOfTheGoatDoors()
+        {
+            // Arrange
+            var simulation = new MontyHallSimulation();
+            const int doorSelection = 1;
+            
+            // Act
+            simulation.SelectDoor(doorSelection);
+            var goatDoor = simulation.GetAGoatDoor();
+            
+
+            // Assert
+            Assert.Equal(GoatDoor, goatDoor.GetType());
+        }
     }
 }
