@@ -23,10 +23,14 @@ namespace MontyHallKata
             return _defaultDoors.OrderBy(_ => random.Next()).ToList();
         }
 
-
         public void SelectDoor(int selectedDoor)
         {
             SelectedDoor = selectedDoor;
+        }
+
+        public IDoor GetAGoatDoor()
+        {
+            return new GoatDoor();
         }
     }
 }
