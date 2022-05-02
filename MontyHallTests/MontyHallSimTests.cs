@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using MontyHallKata;
 using Xunit;
@@ -51,7 +52,7 @@ namespace MontyHallTests
         }
         
         [Fact]
-        public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToGetOneOfTheGoatDoorsFromTheIntialListOfDoors()
+        public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToGetOneOfTheGoatDoorsFromTheInitialListOfDoors()
         {
             // Arrange
             var simulation = new MontyHallSimulation();
@@ -67,6 +68,19 @@ namespace MontyHallTests
             // Assert
             Assert.Equal(typeof(GoatDoor), goatDoor.GetType());
             Assert.Equal(expectedRemainingDoors, actualRemainingDoors.Count);
+        }
+        
+        [Fact]
+        public void GivenTheUserHasNOTSelectedADoor_WhenTheUserTriesToGetOneOfTheGoatDoorsFromTheInitialListOfDoors_ThenThrowException()
+        {
+            // Arrange
+            var simulation = new MontyHallSimulation();
+            const int doorSelection = 1;
+            const int expectedRemainingDoors = 2;
+            
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => simulation.GetAGoatDoor());
+            Assert.Contains("Please select a door first", exception.Message);
         }
     }
 }
