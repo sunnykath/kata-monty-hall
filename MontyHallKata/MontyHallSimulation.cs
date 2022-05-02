@@ -30,7 +30,9 @@ namespace MontyHallKata
 
         public IDoor GetAGoatDoor()
         {
-            return new GoatDoor();
+            var goatDoor = RandomlyOrderedDoors.Find(door => door.GetType() == typeof(GoatDoor))!;
+            RandomlyOrderedDoors.Remove(goatDoor);
+            return goatDoor;
         }
     }
 }
