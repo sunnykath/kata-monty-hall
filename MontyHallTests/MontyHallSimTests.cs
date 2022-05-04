@@ -43,7 +43,7 @@ namespace MontyHallTests
             const int doorToSelected = 1;
             
             // Act
-            simulation.SelectDoor(doorToSelected);
+            simulation.SetSelectedDoor(doorToSelected);
             var selectedDoor = simulation.RandomlyOrderedDoors[doorToSelected];
             
 
@@ -60,7 +60,7 @@ namespace MontyHallTests
             var expectedOpenedDoors = 1;
             
             // Act
-            simulation.SelectDoor(doorSelection);
+            simulation.SetSelectedDoor(doorSelection);
             simulation.OpenAnUnselectedGoatDoor();
             var actualOpenedDoors = simulation.RandomlyOrderedDoors.Where(door => door.IsOpen).ToList();
             
@@ -79,6 +79,27 @@ namespace MontyHallTests
             // Act & Assert
             var exception = Assert.Throws<Exception>(() => simulation.OpenAnUnselectedGoatDoor());
             Assert.Contains("Please select a door first", exception.Message);
+        }
+        
+        [Fact]
+        public void GivenTheUserHasOpenedAnUnselectedGoatDoor_WhenTheUserDecidesToSwitch_ThenTheSelectedDoorWillBeChangedToTheUnselectedClosedDoor()
+        {
+            // Arrange
+            var simulation = new MontyHallSimulation();
+            const int doorSelectionIndex = 1;
+            
+            // Act
+            simulation.SetSelectedDoor(doorSelectionIndex);
+            simulation.OpenAnUnselectedGoatDoor();
+            simulation.SwitchDoorSelection();
+            var doorBeforeSwitch = simulation.RandomlyOrderedDoors[doorSelectionIndex];
+            var doorAfterSwitch = simulation.GetSelectedDoor();
+            
+            
+        
+            // Assert
+            Assert.NotEqual(doorBeforeSwitch, doorAfterSwitch);
+            Assert.False(doorAfterSwitch.IsOpen);
         }
     }
 }
