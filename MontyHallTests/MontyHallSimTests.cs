@@ -7,6 +7,12 @@ namespace MontyHallTests
 {
     public class MontyHallSimTests
     {
+        private readonly MontyHallSimulation _simulation;
+        public MontyHallSimTests()
+        {
+            _simulation = new MontyHallSimulation();
+        }
+        
         [Fact]
         public void GivenASimulation_WhenCreated_ThenThreeDoorsAreCreated()
         {
@@ -14,8 +20,7 @@ namespace MontyHallTests
             const int expectedDoors = 3;
             
             // Act
-            var simulation = new MontyHallSimulation();
-            var doors = simulation.RandomlyOrderedDoors;
+            var doors = _simulation.RandomlyOrderedDoors;
 
             // Assert
             Assert.Equal(expectedDoors, doors.Count);
@@ -24,11 +29,8 @@ namespace MontyHallTests
         [Fact]
         public void GivenASimulation_WhenThreeDoorsAreCreated_ThenThereIsExactlyOneCarDoor()
         {
-            // Arrange
-            var simulation = new MontyHallSimulation();
-            
             // Act
-            var doors = simulation.RandomlyOrderedDoors;
+            var doors = _simulation.RandomlyOrderedDoors;
             var carDoors = doors.Where(door => door.GetType() == typeof(CarDoor));
 
             // Assert
@@ -39,14 +41,12 @@ namespace MontyHallTests
         public void GivenASimulation_WhenThreeDoorsAreCreated_ThenTheUserShouldBeAbleToSelectOne()
         {
             // Arrange
-            var simulation = new MontyHallSimulation();
             const int doorToSelected = 1;
             
             // Act
-            simulation.SetSelectedDoor(doorToSelected);
-            var selectedDoor = simulation.RandomlyOrderedDoors[doorToSelected];
+            _simulation.SetSelectedDoor(doorToSelected);
+            var selectedDoor = _simulation.RandomlyOrderedDoors[doorToSelected];
             
-
             // Assert
             Assert.True(selectedDoor.IsSelected);
         }
@@ -55,16 +55,14 @@ namespace MontyHallTests
         public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToOpenAnUnselectedGoatDoor()
         {
             // Arrange
-            var simulation = new MontyHallSimulation();
             const int doorSelection = 1;
             var expectedOpenedDoors = 1;
             
             // Act
-            simulation.SetSelectedDoor(doorSelection);
-            simulation.OpenAnUnselectedGoatDoor();
-            var actualOpenedDoors = simulation.RandomlyOrderedDoors.Where(door => door.IsOpen).ToList();
+            _simulation.SetSelectedDoor(doorSelection);
+            _simulation.OpenAnUnselectedGoatDoor();
+            var actualOpenedDoors = _simulation.RandomlyOrderedDoors.Where(door => door.IsOpen).ToList();
             
-        
             // Assert
             Assert.Equal(expectedOpenedDoors, actualOpenedDoors.Count);
             Assert.Equal(typeof(GoatDoor), actualOpenedDoors.First().GetType());
@@ -73,11 +71,8 @@ namespace MontyHallTests
         [Fact]
         public void GivenTheUserHasNOTSelectedADoor_WhenTheUserTriesToOpenAnUnselectedGoatDoor_ThenThrowException()
         {
-            // Arrange
-            var simulation = new MontyHallSimulation();
-            
             // Act & Assert
-            var exception = Assert.Throws<Exception>(() => simulation.OpenAnUnselectedGoatDoor());
+            var exception = Assert.Throws<Exception>(() => _simulation.OpenAnUnselectedGoatDoor());
             Assert.Contains("Please select a door first", exception.Message);
         }
         
@@ -85,18 +80,15 @@ namespace MontyHallTests
         public void GivenTheUserHasOpenedAnUnselectedGoatDoor_WhenTheUserDecidesToSwitch_ThenTheSelectedDoorWillBeChangedToTheUnselectedClosedDoor()
         {
             // Arrange
-            var simulation = new MontyHallSimulation();
             const int doorSelectionIndex = 1;
             
             // Act
-            simulation.SetSelectedDoor(doorSelectionIndex);
-            simulation.OpenAnUnselectedGoatDoor();
-            simulation.SwitchDoorSelection();
-            var doorBeforeSwitch = simulation.RandomlyOrderedDoors[doorSelectionIndex];
-            var doorAfterSwitch = simulation.GetSelectedDoor();
+            _simulation.SetSelectedDoor(doorSelectionIndex);
+            _simulation.OpenAnUnselectedGoatDoor();
+            _simulation.SwitchDoorSelection();
+            var doorBeforeSwitch = _simulation.RandomlyOrderedDoors[doorSelectionIndex];
+            var doorAfterSwitch = _simulation.GetSelectedDoor();
             
-            
-        
             // Assert
             Assert.NotEqual(doorBeforeSwitch, doorAfterSwitch);
             Assert.False(doorAfterSwitch.IsOpen);
