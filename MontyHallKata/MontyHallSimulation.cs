@@ -21,9 +21,14 @@ namespace MontyHallKata
             return _defaultDoors.OrderBy(_ => random.Next()).ToList();
         }
 
-        public void SelectDoor(int selectedDoor)
+        public void SetSelectedDoor(int selectedDoor)
         {
             RandomlyOrderedDoors[selectedDoor].IsSelected = true;
+        }
+
+        public Door GetSelectedDoor()
+        {
+            return RandomlyOrderedDoors.Find(door => door.IsSelected)!;
         }
 
         public void OpenAnUnselectedGoatDoor()
@@ -39,6 +44,15 @@ namespace MontyHallKata
         private bool HasADoorBeenSelected()
         {
             return RandomlyOrderedDoors.Any(door => door.IsSelected);
+        }
+
+        public void SwitchDoorSelection()
+        {
+            var newSelectedDoor = RandomlyOrderedDoors.Find(door => !door.IsOpen && !door.IsSelected)!;
+            var oldSelectedDoor = RandomlyOrderedDoors.Find(door => door.IsSelected)!;
+
+            newSelectedDoor.IsSelected = true;
+            oldSelectedDoor.IsSelected = false;
         }
     }
 }
