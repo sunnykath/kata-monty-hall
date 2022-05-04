@@ -1,6 +1,6 @@
 namespace MontyHallKata
 {
-    public class CarDoor : IDoor
+    public class CarDoor : Door
     {
         
     }

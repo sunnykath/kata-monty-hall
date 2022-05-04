@@ -1,6 +1,6 @@
 namespace MontyHallKata
 {
-    public class GoatDoor : IDoor
+    public class GoatDoor : Door
     {
         
     }
