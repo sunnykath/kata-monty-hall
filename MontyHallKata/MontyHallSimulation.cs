@@ -6,18 +6,16 @@ namespace MontyHallKata
 {
     public class MontyHallSimulation
     {
-        private readonly IDoor[] _defaultDoors = {new CarDoor(), new GoatDoor(), new GoatDoor()};
+        private readonly Door[] _defaultDoors = {new CarDoor(), new GoatDoor(), new GoatDoor()};
 
-        public int? SelectedDoor { get; private set; } = null;
-
-        public readonly List<IDoor> RandomlyOrderedDoors;
+        public readonly List<Door> RandomlyOrderedDoors;
 
         public MontyHallSimulation()
         {
-            RandomlyOrderedDoors = GetRandomlyPopulateDoors();
+            RandomlyOrderedDoors = GetRandomlyPopulatedDoors();
         }
 
-        private List<IDoor> GetRandomlyPopulateDoors()
+        private List<Door> GetRandomlyPopulatedDoors()
         {
             var random = new Random();
             return _defaultDoors.OrderBy(_ => random.Next()).ToList();
@@ -25,14 +23,22 @@ namespace MontyHallKata
 
         public void SelectDoor(int selectedDoor)
         {
-            SelectedDoor = selectedDoor;
+            RandomlyOrderedDoors[selectedDoor].IsSelected = true;
         }
 
-        public IDoor GetAGoatDoor()
+        public void OpenAnUnselectedGoatDoor()
         {
-            var goatDoor = RandomlyOrderedDoors.Find(door => door.GetType() == typeof(GoatDoor))!;
-            RandomlyOrderedDoors.Remove(goatDoor);
-            return goatDoor;
+            if (!HasADoorBeenSelected())
+            {
+                throw new Exception("Please select a door first");
+            }
+            var goatDoor = RandomlyOrderedDoors.Find(door => door.GetType() == typeof(GoatDoor) && !door.IsSelected)!;
+            goatDoor.IsOpen = true;
+        }
+
+        private bool HasADoorBeenSelected()
+        {
+            return RandomlyOrderedDoors.Any(door => door.IsSelected);
         }
     }
 }

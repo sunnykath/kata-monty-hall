@@ -40,46 +40,44 @@ namespace MontyHallTests
         {
             // Arrange
             var simulation = new MontyHallSimulation();
-            const int expectedSelectedDoor = 1;
+            const int doorToSelected = 1;
             
             // Act
-            simulation.SelectDoor(expectedSelectedDoor);
-            var actualSelectedDoor = simulation.SelectedDoor;
+            simulation.SelectDoor(doorToSelected);
+            var selectedDoor = simulation.RandomlyOrderedDoors[doorToSelected];
             
 
             // Assert
-            Assert.Equal(expectedSelectedDoor, actualSelectedDoor);
+            Assert.True(selectedDoor.IsSelected);
         }
         
         [Fact]
-        public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToGetOneOfTheGoatDoorsFromTheInitialListOfDoors()
+        public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToOpenAnUnselectedGoatDoor()
         {
             // Arrange
             var simulation = new MontyHallSimulation();
             const int doorSelection = 1;
-            const int expectedRemainingDoors = 2;
+            var expectedOpenedDoors = 1;
             
             // Act
             simulation.SelectDoor(doorSelection);
-            var goatDoor = simulation.GetAGoatDoor();
-            var actualRemainingDoors =simulation.RandomlyOrderedDoors;
+            simulation.OpenAnUnselectedGoatDoor();
+            var actualOpenedDoors = simulation.RandomlyOrderedDoors.Where(door => door.IsOpen).ToList();
             
-
+        
             // Assert
-            Assert.Equal(typeof(GoatDoor), goatDoor.GetType());
-            Assert.Equal(expectedRemainingDoors, actualRemainingDoors.Count);
+            Assert.Equal(expectedOpenedDoors, actualOpenedDoors.Count);
+            Assert.Equal(typeof(GoatDoor), actualOpenedDoors.First().GetType());
         }
         
         [Fact]
-        public void GivenTheUserHasNOTSelectedADoor_WhenTheUserTriesToGetOneOfTheGoatDoorsFromTheInitialListOfDoors_ThenThrowException()
+        public void GivenTheUserHasNOTSelectedADoor_WhenTheUserTriesToOpenAnUnselectedGoatDoor_ThenThrowException()
         {
             // Arrange
             var simulation = new MontyHallSimulation();
-            const int doorSelection = 1;
-            const int expectedRemainingDoors = 2;
             
             // Act & Assert
-            var exception = Assert.Throws<Exception>(() => simulation.GetAGoatDoor());
+            var exception = Assert.Throws<Exception>(() => simulation.OpenAnUnselectedGoatDoor());
             Assert.Contains("Please select a door first", exception.Message);
         }
     }
