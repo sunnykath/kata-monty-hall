@@ -14,9 +14,9 @@ namespace MontyHallKata
         {
             RandomlyOrderedDoors = GetRandomlyPopulatedDoors();
         }
-
         private List<Door> GetRandomlyPopulatedDoors()
         {
+            // @TODO: INTERFACE TO MOCK THIS
             var random = new Random();
             return _defaultDoors.OrderBy(_ => random.Next()).ToList();
         }
@@ -49,10 +49,16 @@ namespace MontyHallKata
         public void SwitchDoorSelection()
         {
             var newSelectedDoor = RandomlyOrderedDoors.Find(door => !door.IsOpen && !door.IsSelected)!;
-            var oldSelectedDoor = RandomlyOrderedDoors.Find(door => door.IsSelected)!;
+            var oldSelectedDoor = GetSelectedDoor();
 
             newSelectedDoor.IsSelected = true;
             oldSelectedDoor.IsSelected = false;
+        }
+
+
+        public bool HasWonGame()
+        {
+            return GetSelectedDoor().GetType() == typeof(CarDoor);
         }
     }
 }
