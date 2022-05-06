@@ -81,10 +81,10 @@ namespace MontyHallTests
         {
             // Arrange
             const int doorSelectionIndex = 1;
-            
-            // Act
             _simulation.SetSelectedDoor(doorSelectionIndex);
             _simulation.OpenAnUnselectedGoatDoor();
+            
+            // Act
             _simulation.SwitchDoorSelection();
             var doorBeforeSwitch = _simulation.RandomlyOrderedDoors[doorSelectionIndex];
             var doorAfterSwitch = _simulation.GetSelectedDoor();
@@ -92,6 +92,23 @@ namespace MontyHallTests
             // Assert
             Assert.NotEqual(doorBeforeSwitch, doorAfterSwitch);
             Assert.False(doorAfterSwitch.IsOpen);
+        }
+        
+        [Fact]
+        public void GivenTheUserHasOpenedAnUnselectedGoatDoor_WhenTheUserDecidesToStay_TheyShouldBeAbleToRevealTheResult()
+        {
+            // Arrange
+            const int doorSelectionIndex = 1;
+            _simulation.SetSelectedDoor(doorSelectionIndex);
+            _simulation.OpenAnUnselectedGoatDoor();
+            
+            // Act
+            var hasWonGame = _simulation.HasWonGame();
+            var finialDoorSelection = _simulation.GetSelectedDoor();
+            var expectedGameResult = (typeof(CarDoor) == finialDoorSelection.GetType());
+            
+            // Assert
+            Assert.Equal(expectedGameResult, hasWonGame);
         }
     }
 }
