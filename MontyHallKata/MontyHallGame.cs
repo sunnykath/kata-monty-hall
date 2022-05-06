@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace MontyHallKata
 {
-    public class MontyHallSimulation
+    public class MontyHallGame
     {
         private readonly Door[] _defaultDoors = {new CarDoor(), new GoatDoor(), new GoatDoor()};
 
         public readonly List<Door> RandomlyOrderedDoors;
 
-        public MontyHallSimulation()
+        public MontyHallGame()
         {
             RandomlyOrderedDoors = GetRandomlyPopulatedDoors();
         }

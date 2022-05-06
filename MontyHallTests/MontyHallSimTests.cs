@@ -7,10 +7,10 @@ namespace MontyHallTests
 {
     public class MontyHallSimTests
     {
-        private readonly MontyHallSimulation _simulation;
+        private readonly MontyHallGame _game;
         public MontyHallSimTests()
         {
-            _simulation = new MontyHallSimulation();
+            _game = new MontyHallGame();
         }
         
         [Fact]
@@ -20,7 +20,7 @@ namespace MontyHallTests
             const int expectedDoors = 3;
             
             // Act
-            var doors = _simulation.RandomlyOrderedDoors;
+            var doors = _game.RandomlyOrderedDoors;
 
             // Assert
             Assert.Equal(expectedDoors, doors.Count);
@@ -30,7 +30,7 @@ namespace MontyHallTests
         public void GivenASimulation_WhenThreeDoorsAreCreated_ThenThereIsExactlyOneCarDoor()
         {
             // Act
-            var doors = _simulation.RandomlyOrderedDoors;
+            var doors = _game.RandomlyOrderedDoors;
             var carDoors = doors.Where(door => door.GetType() == typeof(CarDoor));
 
             // Assert
@@ -44,8 +44,8 @@ namespace MontyHallTests
             const int doorToSelected = 1;
             
             // Act
-            _simulation.SetSelectedDoor(doorToSelected);
-            var selectedDoor = _simulation.RandomlyOrderedDoors[doorToSelected];
+            _game.SetSelectedDoor(doorToSelected);
+            var selectedDoor = _game.RandomlyOrderedDoors[doorToSelected];
             
             // Assert
             Assert.True(selectedDoor.IsSelected);
@@ -59,9 +59,9 @@ namespace MontyHallTests
             var expectedOpenedDoors = 1;
             
             // Act
-            _simulation.SetSelectedDoor(doorSelection);
-            _simulation.OpenAnUnselectedGoatDoor();
-            var actualOpenedDoors = _simulation.RandomlyOrderedDoors.Where(door => door.IsOpen).ToList();
+            _game.SetSelectedDoor(doorSelection);
+            _game.OpenAnUnselectedGoatDoor();
+            var actualOpenedDoors = _game.RandomlyOrderedDoors.Where(door => door.IsOpen).ToList();
             
             // Assert
             Assert.Equal(expectedOpenedDoors, actualOpenedDoors.Count);
@@ -72,7 +72,7 @@ namespace MontyHallTests
         public void GivenTheUserHasNOTSelectedADoor_WhenTheUserTriesToOpenAnUnselectedGoatDoor_ThenThrowException()
         {
             // Act & Assert
-            var exception = Assert.Throws<Exception>(() => _simulation.OpenAnUnselectedGoatDoor());
+            var exception = Assert.Throws<Exception>(() => _game.OpenAnUnselectedGoatDoor());
             Assert.Contains("Please select a door first", exception.Message);
         }
         
@@ -81,13 +81,13 @@ namespace MontyHallTests
         {
             // Arrange
             const int doorSelectionIndex = 1;
-            _simulation.SetSelectedDoor(doorSelectionIndex);
-            _simulation.OpenAnUnselectedGoatDoor();
+            _game.SetSelectedDoor(doorSelectionIndex);
+            _game.OpenAnUnselectedGoatDoor();
             
             // Act
-            _simulation.SwitchDoorSelection();
-            var doorBeforeSwitch = _simulation.RandomlyOrderedDoors[doorSelectionIndex];
-            var doorAfterSwitch = _simulation.GetSelectedDoor();
+            _game.SwitchDoorSelection();
+            var doorBeforeSwitch = _game.RandomlyOrderedDoors[doorSelectionIndex];
+            var doorAfterSwitch = _game.GetSelectedDoor();
             
             // Assert
             Assert.NotEqual(doorBeforeSwitch, doorAfterSwitch);
@@ -99,12 +99,12 @@ namespace MontyHallTests
         {
             // Arrange
             const int doorSelectionIndex = 1;
-            _simulation.SetSelectedDoor(doorSelectionIndex);
-            _simulation.OpenAnUnselectedGoatDoor();
+            _game.SetSelectedDoor(doorSelectionIndex);
+            _game.OpenAnUnselectedGoatDoor();
             
             // Act
-            var hasWonGame = _simulation.HasWonGame();
-            var finialDoorSelection = _simulation.GetSelectedDoor();
+            var hasWonGame = _game.HasWonGame();
+            var finialDoorSelection = _game.GetSelectedDoor();
             var expectedGameResult = (typeof(CarDoor) == finialDoorSelection.GetType());
             
             // Assert
