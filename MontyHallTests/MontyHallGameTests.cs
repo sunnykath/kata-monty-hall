@@ -5,10 +5,10 @@ using Xunit;
 
 namespace MontyHallTests
 {
-    public class MontyHallSimTests
+    public class MontyHallGameTests
     {
         private readonly MontyHallGame _game;
-        public MontyHallSimTests()
+        public MontyHallGameTests()
         {
             _game = new MontyHallGame();
         }
@@ -27,11 +27,11 @@ namespace MontyHallTests
         }
         
         [Fact]
-        public void GivenASimulation_WhenThreeDoorsAreCreated_ThenThereIsExactlyOneCarDoor()
+        public void GivenASimulation_WhenThreeDoorsAreCreated_ThenThereIsExactlyOneWinningDoor()
         {
             // Act
             var doors = _game.RandomlyOrderedDoors;
-            var carDoors = doors.Where(door => door.GetType() == typeof(CarDoor));
+            var carDoors = doors.Where(door => door.IsWinningDoor);
 
             // Assert
             Assert.Single(carDoors);
@@ -52,7 +52,7 @@ namespace MontyHallTests
         }
         
         [Fact]
-        public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToOpenAnUnselectedGoatDoor()
+        public void GivenASimulation_WhenTheUserHasSelectedADoor_ThenTheUserShouldBeAbleToOpenAnUnselectedLosingDoor()
         {
             // Arrange
             const int doorSelection = 1;
@@ -60,19 +60,19 @@ namespace MontyHallTests
             
             // Act
             _game.SetSelectedDoor(doorSelection);
-            _game.OpenAnUnselectedGoatDoor();
+            _game.OpenAnUnselectedLosingDoor();
             var actualOpenedDoors = _game.RandomlyOrderedDoors.Where(door => door.IsOpen).ToList();
             
             // Assert
             Assert.Equal(expectedOpenedDoors, actualOpenedDoors.Count);
-            Assert.Equal(typeof(GoatDoor), actualOpenedDoors.First().GetType());
+            Assert.False(actualOpenedDoors.First().IsWinningDoor);
         }
         
         [Fact]
         public void GivenTheUserHasNOTSelectedADoor_WhenTheUserTriesToOpenAnUnselectedGoatDoor_ThenThrowException()
         {
             // Act & Assert
-            var exception = Assert.Throws<Exception>(() => _game.OpenAnUnselectedGoatDoor());
+            var exception = Assert.Throws<Exception>(() => _game.OpenAnUnselectedLosingDoor());
             Assert.Contains("Please select a door first", exception.Message);
         }
         
@@ -82,7 +82,7 @@ namespace MontyHallTests
             // Arrange
             const int doorSelectionIndex = 1;
             _game.SetSelectedDoor(doorSelectionIndex);
-            _game.OpenAnUnselectedGoatDoor();
+            _game.OpenAnUnselectedLosingDoor();
             
             // Act
             _game.SwitchDoorSelection();
@@ -100,12 +100,12 @@ namespace MontyHallTests
             // Arrange
             const int doorSelectionIndex = 1;
             _game.SetSelectedDoor(doorSelectionIndex);
-            _game.OpenAnUnselectedGoatDoor();
+            _game.OpenAnUnselectedLosingDoor();
             
             // Act
             var hasWonGame = _game.HasWonGame();
             var finialDoorSelection = _game.GetSelectedDoor();
-            var expectedGameResult = (typeof(CarDoor) == finialDoorSelection.GetType());
+            var expectedGameResult = finialDoorSelection.IsWinningDoor;
             
             // Assert
             Assert.Equal(expectedGameResult, hasWonGame);

@@ -6,7 +6,7 @@ namespace MontyHallKata
 {
     public class MontyHallGame
     {
-        private readonly Door[] _defaultDoors = {new CarDoor(), new GoatDoor(), new GoatDoor()};
+        private readonly Door[] _defaultDoors = {Door.WinningDoor(), Door.LosingDoor(), Door.LosingDoor()};
 
         public readonly List<Door> RandomlyOrderedDoors;
 
@@ -31,13 +31,13 @@ namespace MontyHallKata
             return RandomlyOrderedDoors.Find(door => door.IsSelected)!;
         }
 
-        public void OpenAnUnselectedGoatDoor()
+        public void OpenAnUnselectedLosingDoor()
         {
             if (!HasADoorBeenSelected())
             {
                 throw new Exception("Please select a door first");
             }
-            var goatDoor = RandomlyOrderedDoors.Find(door => door.GetType() == typeof(GoatDoor) && !door.IsSelected)!;
+            var goatDoor = RandomlyOrderedDoors.Find(door => !door.IsWinningDoor && !door.IsSelected)!;
             goatDoor.IsOpen = true;
         }
 
@@ -58,7 +58,7 @@ namespace MontyHallKata
 
         public bool HasWonGame()
         {
-            return GetSelectedDoor().GetType() == typeof(CarDoor);
+            return GetSelectedDoor().IsWinningDoor;
         }
     }
 }
