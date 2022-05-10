@@ -10,7 +10,8 @@ namespace MontyHallTests
         private readonly MontyHallGame _game;
         public MontyHallGameTests()
         {
-            _game = new MontyHallGame();
+            var shuffler = new Shuffler();
+            _game = new MontyHallGame(shuffler);
         }
         
         [Fact]
@@ -23,7 +24,7 @@ namespace MontyHallTests
             var doors = _game.RandomlyOrderedDoors;
 
             // Assert
-            Assert.Equal(expectedDoors, doors.Count);
+            Assert.Equal(expectedDoors, doors.Length);
         }
         
         [Fact]
@@ -31,24 +32,24 @@ namespace MontyHallTests
         {
             // Act
             var doors = _game.RandomlyOrderedDoors;
-            var carDoors = doors.Where(door => door.IsWinningDoor);
+            var winningDoors = doors.Where(door => door.IsWinningDoor);
 
             // Assert
-            Assert.Single(carDoors);
+            Assert.Single(winningDoors);
         }
         
         [Fact]
         public void GivenASimulation_WhenThreeDoorsAreCreated_ThenTheUserShouldBeAbleToSelectOne()
         {
             // Arrange
-            const int doorToSelected = 1;
+            const int doorToBeSelected = 1;
             
             // Act
-            _game.SetSelectedDoor(doorToSelected);
-            var selectedDoor = _game.RandomlyOrderedDoors[doorToSelected];
+            _game.SetSelectedDoor(doorToBeSelected);
+            var selectedDoor = _game.RandomlyOrderedDoors[doorToBeSelected];
             
             // Assert
-            Assert.True(selectedDoor.IsSelected);
+            Assert.True(selectedDoor.IsDoorSelected());
         }
         
         [Fact]
@@ -61,7 +62,7 @@ namespace MontyHallTests
             // Act
             _game.SetSelectedDoor(doorSelection);
             _game.OpenAnUnselectedLosingDoor();
-            var actualOpenedDoors = _game.RandomlyOrderedDoors.Where(door => door.IsOpen).ToList();
+            var actualOpenedDoors = _game.RandomlyOrderedDoors.Where(door => door.IsDoorOpen()).ToList();
             
             // Assert
             Assert.Equal(expectedOpenedDoors, actualOpenedDoors.Count);
@@ -91,7 +92,7 @@ namespace MontyHallTests
             
             // Assert
             Assert.NotEqual(doorBeforeSwitch, doorAfterSwitch);
-            Assert.False(doorAfterSwitch.IsOpen);
+            Assert.False(doorAfterSwitch.IsDoorOpen());
         }
         
         [Fact]
@@ -101,6 +102,24 @@ namespace MontyHallTests
             const int doorSelectionIndex = 1;
             _game.SetSelectedDoor(doorSelectionIndex);
             _game.OpenAnUnselectedLosingDoor();
+            
+            // Act
+            var hasWonGame = _game.HasWonGame();
+            var finialDoorSelection = _game.GetSelectedDoor();
+            var expectedGameResult = finialDoorSelection.IsWinningDoor;
+            
+            // Assert
+            Assert.Equal(expectedGameResult, hasWonGame);
+        }
+        
+        [Fact]
+        public void GivenTheUserHasOpenedAnUnselectedGoatDoor_WhenTheUserHasDecidedToSwitch_TheyShouldBeAbleToRevealTheResult()
+        {
+            // Arrange
+            const int doorSelectionIndex = 1;
+            _game.SetSelectedDoor(doorSelectionIndex);
+            _game.OpenAnUnselectedLosingDoor();
+            _game.SwitchDoorSelection();
             
             // Act
             var hasWonGame = _game.HasWonGame();

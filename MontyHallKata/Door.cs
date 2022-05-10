@@ -2,8 +2,9 @@ namespace MontyHallKata
 {
     public class Door
     {
-        public bool IsOpen;
-        public bool IsSelected;
+        private bool _isOpen;
+        private bool _isSelected;
+        
         public readonly bool IsWinningDoor;
 
         private Door(bool isWinningDoor)
@@ -18,6 +19,28 @@ namespace MontyHallKata
         public static Door LosingDoor()
         {
             return new Door(false);
+        }
+
+        public void OpenDoor()
+        {
+            _isOpen = true;
+        }
+        public bool IsDoorOpen()
+        {
+            return _isOpen;
+        }
+
+        public void SelectDoor()
+        {
+            _isSelected = true;
+        }
+        public void DeSelectDoor()
+        {
+            _isSelected = false;
+        }
+        public bool IsDoorSelected()
+        {
+            return _isSelected;
         }
     }
 }
