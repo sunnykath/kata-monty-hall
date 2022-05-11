@@ -26,5 +26,19 @@ namespace MontyHallTests
             // Assert
             Assert.True(winningPercentage is 0 or 100);
         }
+
+        [Fact]
+        public void GivenAMontyHallGame_WhenSimulatedOnceUsingSwitch_ThenShouldReturnTheWinningPercentageAsANumber()
+        {
+            // Arrange
+            const string choice = "switch";
+            const int numberOfSimulations = 1;
+            
+            // Act
+            var winningPercentage = _simulation.Simulate(numberOfSimulations, choice);
+
+            // Assert
+            Assert.True(winningPercentage is 0 or 100);
+        }
     }
 }
