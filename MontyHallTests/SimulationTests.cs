@@ -1,0 +1,30 @@
+using MontyHallKata;
+using Moq;
+using Xunit;
+
+namespace MontyHallTests
+{
+    public class SimulationTests
+    {
+        private readonly SimulationGenerator _simulation;
+        
+        public SimulationTests()
+        {
+            _simulation = new SimulationGenerator(new Shuffler());
+        }
+
+        [Fact]
+        public void GivenAMontyHallGame_WhenSimulatedOnceUsingStay_ThenShouldReturnTheWinningPercentageAsANumber()
+        {
+            // Arrange
+            const string choice = "stay";
+            const int numberOfSimulations = 1;
+            
+            // Act
+            var winningPercentage = _simulation.Simulate(numberOfSimulations, choice);
+
+            // Assert
+            Assert.True(winningPercentage == 0 || winningPercentage == 100);
+        }
+    }
+}
