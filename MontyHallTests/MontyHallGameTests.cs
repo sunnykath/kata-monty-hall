@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using MontyHallKata;
+using MontyHallKata.Models;
 using Moq;
 using Xunit;
 
@@ -43,7 +44,7 @@ namespace MontyHallTests
         public void GivenASimulation_WhenThreeDoorsAreCreated_ThenTheyAreShuffledUsingTheShuffler()
         {
             // Arrange
-            var expectedShuffledDoors = new[] { Door.LosingDoor(), Door.WinningDoor(), Door.LosingDoor() };
+            var expectedShuffledDoors = new[] { DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor() };
             var mockShuffler = new Mock<IShuffle>();
             mockShuffler.Setup(shuffle => shuffle.GetShuffledArray(It.IsAny<Door[]>()))
                 .Returns(expectedShuffledDoors);
@@ -67,7 +68,7 @@ namespace MontyHallTests
             var selectedDoor = _game.RandomlyOrderedDoors[doorToBeSelected];
             
             // Assert
-            Assert.True(selectedDoor.IsDoorSelected());
+            Assert.True(DoorsFactory.IsDoorSelected(selectedDoor));
         }
         
         [Fact]
@@ -80,7 +81,7 @@ namespace MontyHallTests
             // Act
             _game.SetSelectedDoor(doorSelection);
             _game.OpenAnUnselectedLosingDoor();
-            var actualOpenedDoors = _game.RandomlyOrderedDoors.Where(door => door.IsDoorOpen()).ToList();
+            var actualOpenedDoors = _game.RandomlyOrderedDoors.Where(DoorsFactory.IsDoorOpen).ToList();
             
             // Assert
             Assert.Equal(expectedOpenedDoors, actualOpenedDoors.Count);
@@ -110,7 +111,7 @@ namespace MontyHallTests
             
             // Assert
             Assert.NotEqual(doorBeforeSwitch, doorAfterSwitch);
-            Assert.False(doorAfterSwitch.IsDoorOpen());
+            Assert.False(DoorsFactory.IsDoorOpen(doorAfterSwitch));
         }
         
         [Fact]

@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
+using MontyHallKata.Models;
 
 namespace MontyHallKata
 {
     public class MontyHallGame
     {
-        private readonly Door[] _defaultDoors = {Door.WinningDoor(), Door.LosingDoor(), Door.LosingDoor()};
+        private readonly Door[] _defaultDoors = {DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateLosingDoor()};
 
         public readonly Door[] RandomlyOrderedDoors;
 
@@ -16,12 +17,12 @@ namespace MontyHallKata
         
         public void SetSelectedDoor(int selectedDoor)
         {
-            RandomlyOrderedDoors[selectedDoor].SelectDoor();
+            DoorsFactory.SelectDoor(RandomlyOrderedDoors[selectedDoor]);
         }
 
         public Door GetSelectedDoor()
         {
-            return Array.Find(RandomlyOrderedDoors, door => door.IsDoorSelected())!;
+            return Array.Find(RandomlyOrderedDoors, DoorsFactory.IsDoorSelected)!;
         }
 
         public void OpenAnUnselectedLosingDoor()
@@ -30,22 +31,22 @@ namespace MontyHallKata
             {
                 throw new Exception("Please select a door first");
             }
-            var losingDoor = Array.Find(RandomlyOrderedDoors, door => !door.IsWinningDoor && !door.IsDoorSelected())!;
-            losingDoor.OpenDoor();
+            var losingDoor = Array.Find(RandomlyOrderedDoors, door => !DoorsFactory.IsWinningDoor(door) && !DoorsFactory.IsDoorSelected(door))!;
+            DoorsFactory.OpenDoor(losingDoor);
         }
         
         private bool HasADoorBeenSelected()
         {
-            return RandomlyOrderedDoors.Any(door => door.IsDoorSelected());
+            return RandomlyOrderedDoors.Any(DoorsFactory.IsDoorSelected);
         }
 
         public void SwitchDoorSelection()
         {
-            var doorToBeSelected = Array.Find(RandomlyOrderedDoors, door => !door.IsDoorOpen() && !door.IsDoorSelected())!;
+            var doorToBeSelected = Array.Find(RandomlyOrderedDoors, door => !DoorsFactory.IsDoorOpen(door) && !DoorsFactory.IsDoorSelected(door))!;
             var oldSelectedDoor = GetSelectedDoor();
 
-            doorToBeSelected.SelectDoor();
-            oldSelectedDoor.DeSelectDoor();
+            DoorsFactory.SelectDoor(doorToBeSelected);
+            DoorsFactory.DeSelectDoor(oldSelectedDoor);
         }
         
         public bool HasWonGame()
