@@ -24,7 +24,7 @@ namespace MontyHallTests
             var winningPercentage = _simulation.Simulate(numberOfSimulations, choice);
 
             // Assert
-            Assert.True(winningPercentage == 0 || winningPercentage == 100);
+            Assert.True(winningPercentage is 0 or 100);
         }
     }
 }

@@ -19,26 +19,24 @@ namespace MontyHallKata
                 _game.SetSelectedDoor(1);
                 _game.OpenAnUnselectedLosingDoor();
 
-                bool hasWonGame;
-                if (choice.ToLower().Equals("stay"))
-                {
-                    hasWonGame = _game.HasWonGame();
-                }
-                else
-                {
-                    _game.SwitchDoorSelection();
-                    hasWonGame = _game.HasWonGame();
-                }
+                HandleChoice(choice);
 
-                if (hasWonGame)
+                if (_game.HasWonGame())
                 {
                     gamesWon++;
                 }
             }
-
             var winningPercentage = gamesWon * 100 / numberOfSimulations;
 
             return winningPercentage;
+        }
+
+        private void HandleChoice(string choice)
+        {
+            if (choice.ToLower().Equals("switch"))
+            {
+                _game.SwitchDoorSelection();
+            }
         }
     }
 }
