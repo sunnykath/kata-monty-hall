@@ -41,10 +41,10 @@ namespace MontyHallKata
 
         public void SwitchDoorSelection()
         {
-            var newSelectedDoor = Array.Find(RandomlyOrderedDoors, door => !door.IsDoorOpen() && !door.IsDoorSelected())!;
+            var doorToBeSelected = Array.Find(RandomlyOrderedDoors, door => !door.IsDoorOpen() && !door.IsDoorSelected())!;
             var oldSelectedDoor = GetSelectedDoor();
 
-            newSelectedDoor.SelectDoor();
+            doorToBeSelected.SelectDoor();
             oldSelectedDoor.DeSelectDoor();
         }
         

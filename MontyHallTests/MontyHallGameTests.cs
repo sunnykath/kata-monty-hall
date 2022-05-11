@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using MontyHallKata;
+using Moq;
 using Xunit;
 
 namespace MontyHallTests
@@ -37,6 +38,23 @@ namespace MontyHallTests
             // Assert
             Assert.Single(winningDoors);
         }
+
+        [Fact]
+        public void GivenASimulation_WhenThreeDoorsAreCreated_ThenTheyAreShuffledUsingTheShuffler()
+        {
+            // Arrange
+            var expectedShuffledDoors = new[] { Door.LosingDoor(), Door.WinningDoor(), Door.LosingDoor() };
+            var mockShuffler = new Mock<IShuffle>();
+            mockShuffler.Setup(shuffle => shuffle.GetShuffledArray(It.IsAny<Door[]>()))
+                .Returns(expectedShuffledDoors);
+            var game = new MontyHallGame(mockShuffler.Object);
+            
+            // Act
+            var actualShuffledDoors = game.RandomlyOrderedDoors;
+
+            // Assert
+            Assert.Equal(expectedShuffledDoors, actualShuffledDoors);
+        }        
         
         [Fact]
         public void GivenASimulation_WhenThreeDoorsAreCreated_ThenTheUserShouldBeAbleToSelectOne()
@@ -96,7 +114,7 @@ namespace MontyHallTests
         }
         
         [Fact]
-        public void GivenTheUserHasOpenedAnUnselectedGoatDoor_WhenTheUserDecidesToStay_TheyShouldBeAbleToRevealTheResult()
+        public void GivenTheUserHasOpenedAnUnselectedGoatDoor_WhenTheUserDecidesToStay_TheyShouldBeAbleToCheckIfUserHasWonTheGame()
         {
             // Arrange
             const int doorSelectionIndex = 1;
