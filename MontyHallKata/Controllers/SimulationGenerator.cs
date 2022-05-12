@@ -4,11 +4,12 @@ namespace MontyHallKata.Controllers
 {
     public class SimulationGenerator
     {
-        private readonly IRandomizer _shuffler;
+        private readonly IRandomizer _randomizer;
         private MontyHallGame? _game;
-        public SimulationGenerator(IRandomizer shuffler)
+        private const int MaxNumberOfDoors = 2;
+        public SimulationGenerator(IRandomizer randomizer)
         {
-            _shuffler = shuffler;
+            _randomizer = randomizer;
         }
 
         public int Simulate(int numberOfSimulations, string choice)
@@ -16,9 +17,10 @@ namespace MontyHallKata.Controllers
             var gamesWon = 0;
             for (var i = 0; i < numberOfSimulations; i++)
             {
-                _game = new MontyHallGame(_shuffler);
+                var doorSelection = _randomizer.GetRandomNumber(max: MaxNumberOfDoors);
                 
-                _game.SetSelectedDoor(1);
+                _game = new MontyHallGame(_randomizer);
+                _game.SetSelectedDoor(doorSelection);
                 _game.OpenAnUnselectedLosingDoor();
 
                 HandleChoice(choice);
