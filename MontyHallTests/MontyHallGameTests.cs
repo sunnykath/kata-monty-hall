@@ -49,14 +49,15 @@ namespace MontyHallTests
             var expectedShuffledDoors = new[] { DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor() };
             var mockShuffler = new Mock<IRandomizer>();
             mockShuffler.Setup(shuffle => shuffle.GetRandomizedArray(It.IsAny<Door[]>()))
-                .Returns(expectedShuffledDoors);
+                .Returns(expectedShuffledDoors)
+                .Verifiable();
             var game = new MontyHallGame(mockShuffler.Object);
             
             // Act
             var actualShuffledDoors = game.RandomlyOrderedDoors;
 
             // Assert
-            // mockShuffler.Verify();
+            mockShuffler.Verify();
             Assert.Equal(expectedShuffledDoors, actualShuffledDoors);
         }        
         
