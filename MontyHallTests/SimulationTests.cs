@@ -1,4 +1,6 @@
 using MontyHallKata;
+using MontyHallKata.Controllers;
+using MontyHallKata.Models.Randomizer;
 using Moq;
 using Xunit;
 
@@ -10,7 +12,7 @@ namespace MontyHallTests
         
         public SimulationTests()
         {
-            _simulation = new SimulationGenerator(new Shuffler());
+            _simulation = new SimulationGenerator(new CustomRandomizer());
         }
 
         [Fact]
@@ -46,13 +48,13 @@ namespace MontyHallTests
         {
             // Arrange
             const string choice = "switch";
-            const int numberOfSimulations = 1;
+            const int numberOfSimulations = 100;
             
             // Act
             var winningPercentage = _simulation.Simulate(numberOfSimulations, choice);
 
             // Assert
-            Assert.True(winningPercentage is >= 0 and <= 100);
+            Assert.True(winningPercentage is > 0 and < 100);
         }
 
         [Fact]
@@ -60,13 +62,13 @@ namespace MontyHallTests
         {
             // Arrange
             const string choice = "switch";
-            const int numberOfSimulations = 1;
+            const int numberOfSimulations = 100;
             
             // Act
             var winningPercentage = _simulation.Simulate(numberOfSimulations, choice);
 
             // Assert
-            Assert.True(winningPercentage is >= 0 and <= 100);
+            Assert.True(winningPercentage is > 0 and < 100);
         }
     }
 }

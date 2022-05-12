@@ -1,10 +1,12 @@
-namespace MontyHallKata
+using MontyHallKata.Models.Randomizer;
+
+namespace MontyHallKata.Controllers
 {
     public class SimulationGenerator
     {
-        private readonly IShuffle _shuffler;
+        private readonly IRandomizer _shuffler;
         private MontyHallGame? _game;
-        public SimulationGenerator(IShuffle shuffler)
+        public SimulationGenerator(IRandomizer shuffler)
         {
             _shuffler = shuffler;
         }

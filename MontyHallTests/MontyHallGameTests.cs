@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
 using MontyHallKata;
+using MontyHallKata.Controllers;
 using MontyHallKata.Models;
+using MontyHallKata.Models.Randomizer;
 using Moq;
 using Xunit;
 
@@ -12,7 +14,7 @@ namespace MontyHallTests
         private readonly MontyHallGame _game;
         public MontyHallGameTests()
         {
-            var shuffler = new Shuffler();
+            var shuffler = new CustomRandomizer();
             _game = new MontyHallGame(shuffler);
         }
         
@@ -45,8 +47,8 @@ namespace MontyHallTests
         {
             // Arrange
             var expectedShuffledDoors = new[] { DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor() };
-            var mockShuffler = new Mock<IShuffle>();
-            mockShuffler.Setup(shuffle => shuffle.GetShuffledArray(It.IsAny<Door[]>()))
+            var mockShuffler = new Mock<IRandomizer>();
+            mockShuffler.Setup(shuffle => shuffle.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(expectedShuffledDoors);
             var game = new MontyHallGame(mockShuffler.Object);
             
@@ -54,6 +56,7 @@ namespace MontyHallTests
             var actualShuffledDoors = game.RandomlyOrderedDoors;
 
             // Assert
+            // mockShuffler.Verify();
             Assert.Equal(expectedShuffledDoors, actualShuffledDoors);
         }        
         

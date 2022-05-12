@@ -1,8 +1,9 @@
 using System;
 using System.Linq;
 using MontyHallKata.Models;
+using MontyHallKata.Models.Randomizer;
 
-namespace MontyHallKata
+namespace MontyHallKata.Controllers
 {
     public class MontyHallGame
     {
@@ -10,9 +11,9 @@ namespace MontyHallKata
 
         public readonly Door[] RandomlyOrderedDoors;
 
-        public MontyHallGame(IShuffle shuffler)
+        public MontyHallGame(IRandomizer shuffler)
         {
-            RandomlyOrderedDoors = shuffler.GetShuffledArray(_defaultDoors);
+            RandomlyOrderedDoors = shuffler.GetRandomizedArray(_defaultDoors);
         }
         
         public void SetSelectedDoor(int selectedDoor)

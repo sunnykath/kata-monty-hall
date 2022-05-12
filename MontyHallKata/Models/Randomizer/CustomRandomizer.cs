@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
 
-namespace MontyHallKata
+namespace MontyHallKata.Models.Randomizer
 {
-    public class Shuffler : IShuffle
+    public class CustomRandomizer : IRandomizer
     {
-        public T[] GetShuffledArray<T>(T[] array)
+        public T[] GetRandomizedArray<T>(T[] array)
         {
             var random = new Random();
             return array.OrderBy(_ => random.Next()).ToArray();

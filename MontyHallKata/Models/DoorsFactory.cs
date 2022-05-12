@@ -1,6 +1,6 @@
 namespace MontyHallKata.Models
 {
-    public class DoorsFactory
+    public static class DoorsFactory
     {
         public static Door CreateWinningDoor()
         {
