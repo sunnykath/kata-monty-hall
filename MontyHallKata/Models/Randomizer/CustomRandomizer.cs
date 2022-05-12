@@ -5,10 +5,15 @@ namespace MontyHallKata.Models.Randomizer
 {
     public class CustomRandomizer : IRandomizer
     {
+        private Random _random = new Random();
         public T[] GetRandomizedArray<T>(T[] array)
         {
-            var random = new Random();
-            return array.OrderBy(_ => random.Next()).ToArray();
+            return array.OrderBy(_ => _random.Next()).ToArray();
+        }
+
+        public int GetRandomNumber(int min = 0, int max = int.MaxValue)
+        {
+            return _random.Next(min, max);
         }
     }
 }
