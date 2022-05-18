@@ -1,10 +1,12 @@
+using System;
+
 namespace MontyHallKata.Views
 {
     public class CustomConsole
     {
         public string GetInputString()
-        {   
-            return " ";
+        {
+            return Console.ReadLine()!;
         }
     }
 }   
