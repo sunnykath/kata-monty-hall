@@ -23,44 +23,29 @@ namespace MontyHallTests
             _simulation = new SimulationGenerator(_mockRandomizer.Object);
         }
 
-        [Fact]
-        public void GivenAMontyHallGame_WhenSimulatedOnceUsingStayOnTheWinningDoor_ThenShouldReturnWinningPercentageAsHundred()
+        [Theory]
+        [InlineData("stay", 100)]
+        [InlineData("switch", 0)]
+        public void GivenAMontyHallGame_WhenSimulatedOnce_ThenShouldCalculateAndReturnWinningPercentageCorrectly(string choice, int expectedWinningPercentage)
         {
             // Arrange
             const int doorSelection = 1;
             _mockRandomizer.Setup(randomizer => randomizer.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(doorSelection);
             
-            const string choice = "stay";
             const int numberOfSimulations = 1;
 
             // Act
-            var winningPercentage = _simulation.Simulate(numberOfSimulations, choice);
+            var actualWinningPercentage = _simulation.Simulate(numberOfSimulations, choice);
 
             // Assert
-            Assert.Equal(100, winningPercentage);
+            Assert.Equal(expectedWinningPercentage, actualWinningPercentage);
         }
 
-        [Fact]
-        public void GivenAMontyHallGame_WhenSimulatedOnceUsingSwitchFromTheWinningDoor_ThenShouldReturnTheWinningPercentageAsZero()
-        {
-            // Arrange
-            const int doorSelection = 1;
-            _mockRandomizer.Setup(randomizer => randomizer.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(doorSelection);
-            
-            const string choice = "switch";
-            const int numberOfSimulations = 1;
-            
-            // Act
-            var winningPercentage = _simulation.Simulate(numberOfSimulations, choice);
-
-            // Assert
-            Assert.Equal(0, winningPercentage);
-        }
-
-        [Fact]
-        public void GivenAMontyHallGame_WhenSimulatedTenTimesUsingSwitch_ThenShouldReturnTheWinningPercentageCorrectly()
+        [Theory]
+        [InlineData("stay", 30)]
+        [InlineData("switch", 70)]
+        public void GivenAMontyHallGame_WhenSimulatedTenTimes_ThenShouldCalculateAndReturnTheWinningPercentageCorrectly(string choice, int expectedWinningPercentage)
         {
             // Arrange
             const int initialWinningDoorSelection = 1;
@@ -71,36 +56,13 @@ namespace MontyHallTests
                 .Returns(initialWinningDoorSelection)
                 .Returns(initialLosingDoorSelection);
             
-            const string choice = "switch";
             const int numberOfSimulations = 10;
             
             // Act
-            var winningPercentage = _simulation.Simulate(numberOfSimulations, choice);
+            var actualWinningPercentage = _simulation.Simulate(numberOfSimulations, choice);
 
             // Assert
-            Assert.Equal(70, winningPercentage);
-        }
-
-        [Fact]
-        public void GivenAMontyHallGame_WhenSimulatedTenTimesUsingStay_ThenShouldReturnTheWinningPercentageAsANumber()
-        {
-            // Arrange
-            const int initialWinningDoorSelection = 1;
-            const int initialLosingDoorSelection = 0;
-            _mockRandomizer.SetupSequence(randomizer => randomizer.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(initialWinningDoorSelection)
-                .Returns(initialWinningDoorSelection)
-                .Returns(initialWinningDoorSelection)
-                .Returns(initialLosingDoorSelection);
-            
-            const string choice = "stay";
-            const int numberOfSimulations = 10;
-            
-            // Act
-            var winningPercentage = _simulation.Simulate(numberOfSimulations, choice);
-
-            // Assert
-            Assert.Equal(30, winningPercentage);
+            Assert.Equal(expectedWinningPercentage, actualWinningPercentage);
         }
     }
 }
