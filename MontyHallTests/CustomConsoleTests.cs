@@ -1,3 +1,4 @@
+using MontyHallKata.Views;
 using Xunit;
 
 namespace MontyHallTests
@@ -14,7 +15,7 @@ namespace MontyHallTests
             var inputString = customConsole.GetInputString();
             
             // Assert
-            Assert.IsType(typeof(string), inputString);
+            Assert.IsType<string>(inputString);
         }
     }
 }
