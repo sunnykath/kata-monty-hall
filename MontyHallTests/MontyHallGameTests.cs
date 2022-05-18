@@ -14,8 +14,8 @@ namespace MontyHallTests
         private readonly MontyHallGame _game;
         public MontyHallGameTests()
         {
-            var shuffler = new CustomRandomizer();
-            _game = new MontyHallGame(shuffler);
+            var randomizer = new CustomRandomizer();
+            _game = new MontyHallGame(randomizer);
         }
         
         [Fact]
