@@ -36,7 +36,8 @@ namespace MontyHallTests
             const int numberOfSimulations = 1;
 
             // Act
-            var actualWinningPercentage = _simulation.Simulate(numberOfSimulations, choice);
+            _simulation.Simulate(numberOfSimulations, choice);
+            var actualWinningPercentage = _simulation.GetWinningPercentage();
 
             // Assert
             Assert.Equal(expectedWinningPercentage, actualWinningPercentage);
@@ -59,7 +60,8 @@ namespace MontyHallTests
             const int numberOfSimulations = 10;
             
             // Act
-            var actualWinningPercentage = _simulation.Simulate(numberOfSimulations, choice);
+            _simulation.Simulate(numberOfSimulations, choice);
+            var actualWinningPercentage = _simulation.GetWinningPercentage();
 
             // Assert
             Assert.Equal(expectedWinningPercentage, actualWinningPercentage);

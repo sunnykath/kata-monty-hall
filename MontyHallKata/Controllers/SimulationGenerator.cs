@@ -7,12 +7,14 @@ namespace MontyHallKata.Controllers
         private readonly IRandomizer _randomizer;
         private MontyHallGame? _game;
         private const int MaxNumberOfDoors = 2;
+
+        private int _winningPercentage;
         public SimulationGenerator(IRandomizer randomizer)
         {
             _randomizer = randomizer;
         }
 
-        public int Simulate(int numberOfSimulations, string choice)
+        public void Simulate(int numberOfSimulations, string choice)
         {
             var gamesWon = 0;
             for (var i = 0; i < numberOfSimulations; i++)
@@ -30,9 +32,12 @@ namespace MontyHallKata.Controllers
                     gamesWon++;
                 }
             }
-            var winningPercentage = gamesWon * 100 / numberOfSimulations;
+            _winningPercentage = gamesWon * 100 / numberOfSimulations;
+        }
 
-            return winningPercentage;
+        public int GetWinningPercentage()
+        {
+            return _winningPercentage;
         }
 
         private void HandleChoice(string choice)
