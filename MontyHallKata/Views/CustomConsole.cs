@@ -4,7 +4,7 @@ namespace MontyHallKata.Views
     {
         public string GetInputString()
         {   
-            return "";
+            return " ";
         }
     }
 }   
