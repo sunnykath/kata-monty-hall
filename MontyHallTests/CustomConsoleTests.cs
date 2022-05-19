@@ -9,36 +9,10 @@ namespace MontyHallTests
     public class CustomConsoleTests
     {
         [Fact]
-        public void GivenACustomConsole_WhenGetInputStringIsCalled_ThenShouldReturnAString()
-        {
-            // Arrange
-            var customConsole = new CustomConsole();
-            
-            // Act
-            var inputString = customConsole.GetInputString();
-            
-            // Assert
-            Assert.IsType<string>(inputString);
-        }
-        
-        [Fact]
-        public void GivenACustomConsole_WhenGetInputStringIsCalled_ThenShouldReturnANonNullOrEmptyString()
-        {
-            // Arrange
-            var customConsole = new CustomConsole();
-            
-            // Act
-            var inputString = customConsole.GetInputString();
-            
-            // Assert
-            Assert.False(inputString.IsNullOrEmpty());
-        }
-        
-        [Fact]
         public void GivenACustomConsole_WhenGetInputStringIsCalled_ThenShouldReturnWhatWasInputtedInTheConsole()
         {
             // Arrange
-            const string expectedInputString = "Hello World\n"; 
+            const string expectedInputString = "Hello World"; 
             var stringReader = new StringReader(expectedInputString);
             Console.SetIn(stringReader);
             
