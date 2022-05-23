@@ -17,9 +17,11 @@ namespace MontyHallTests
         {
             _mockRandomizer = new Mock<IRandomizer>();
             _mockRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
-                .Returns(() => new [] { DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor() });
-            
-            
+                .Returns(() => new[]
+                {
+                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
+                });
+
             _simulation = new SimulationGenerator(_mockRandomizer.Object);
         }
 
