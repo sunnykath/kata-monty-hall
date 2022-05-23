@@ -15,5 +15,18 @@ namespace MontyHallKata.Views
 
             return inputString;
         }
+
+        public int GetIntInput()
+        {
+            bool successfullyParsed;
+            int inputInt;
+            do
+            {
+                var inputString = GetStringInput();
+                successfullyParsed = int.TryParse(inputString, out inputInt);
+            } while (!successfullyParsed);
+
+            return inputInt;
+        }
     }
 }   
