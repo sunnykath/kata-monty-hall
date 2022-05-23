@@ -75,5 +75,22 @@ namespace MontyHallTests
             // Assert
             Assert.Equal(expectedInputInt, actualInputString);
         }
+        
+        [Fact]
+        public void GivenACustomConsole_WhenPrintOutputIsCalled_ThenShouldPrintTheOutputToTheConsole()
+        {
+            // Arrange
+            const string expectedOutput = "Hello World From A Custom Console";
+            var stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
+            
+            var customConsole = new CustomConsole();
+            
+            // Act
+            customConsole.PrintOutput(expectedOutput);
+            
+            // Assert
+            Assert.Equal(expectedOutput, stringWriter.ToString());
+        }
     }
 }
