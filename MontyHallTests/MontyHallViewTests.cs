@@ -100,5 +100,32 @@ namespace MontyHallTests
             // Assert
             Assert.Contains(expectedOutcome, stringWriter.ToString());
         }
+
+        [Fact]
+        public void GivenTheUserHasSelectedADoor_WhenOneOfTheRemainingDoorsOpens_ThenTheUserSHouldBeAbleToSwitchOrStayWithTheirInitialSelection()
+        {
+            // Arrange
+            var stringReader = new StringReader("1\n2\n0\n");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+            
+            var mockRandomizer = new Mock<IRandomizer>();
+            mockRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
+                .Returns(() => new[]
+                {
+                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
+                });
+
+            const string expectedOutcome = "#Door 1#\t#Closed#\n" +
+                                           "#Door 2#\t#Selected#\n" +
+                                           "#Door 3#\t#Open#\n"; 
+            
+            // Act
+            _montyHallView.Play(mockRandomizer.Object);
+            
+            // Assert
+            Assert.Contains(expectedOutcome, stringWriter.ToString());
+        }
     }
 }
