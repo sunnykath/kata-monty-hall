@@ -20,24 +20,27 @@ namespace MontyHallKata.Views
 
             var doorSelection = GetDoorSelectionFromUser();
             
-            game.SetSelectedDoor(doorSelection);
+            if (doorSelection == 0)
+            {
+                _customConsole.PrintOutput("You have quit the game.\n");
+                return;
+            }
+            
+            game.SetSelectedDoor(doorSelection - 1);
+            
+            PrintDoors(game.RandomlyOrderedDoors);
+            
+            game.OpenAnUnselectedLosingDoor();
             
             PrintDoors(game.RandomlyOrderedDoors);
 
-            var playerInput = _customConsole.GetStringInput();
-            
-            if (playerInput.Equals("q"))
-            {
-                _customConsole.PrintOutput("You have Quit the game.\n");
-                return;
-            }
         }
 
         private int GetDoorSelectionFromUser()
         {
-            _customConsole.PrintOutput("Select a door to begin: ");
+            _customConsole.PrintOutput("Select a door to begin (or enter 0 to quit): ");
             var intInput = _customConsole.GetIntInput();
-            return intInput - 1;
+            return intInput ;
         }
 
         private void PrintDoors(Door[] doors)
