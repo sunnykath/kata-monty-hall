@@ -48,6 +48,17 @@ namespace MontyHallKata.Views
             
             PrintDoors(game.RandomlyOrderedDoors);
 
+            var hasWonGame = game.HasWonGame();
+            OutputFinalResult(hasWonGame);
+            
+            PrintDoors(game.RandomlyOrderedDoors);
+
+        }
+
+        private void OutputFinalResult(bool hasWonGame)
+        {
+            var finalOutputString = hasWonGame ? "You have won the game!\n" : "You have lost the game!\n";
+            _customConsole.PrintOutput(finalOutputString);
         }
 
         private int GetUserChoice()
