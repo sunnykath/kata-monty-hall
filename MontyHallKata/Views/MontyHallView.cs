@@ -17,6 +17,13 @@ namespace MontyHallKata.Views
             var game = new MontyHallGame(randomizer);
 
             PrintDoors(game.RandomlyOrderedDoors);
+
+            var playerInput = _customConsole.GetStringInput();
+            if (playerInput.Equals("q"))
+            {
+                _customConsole.PrintOutput("You have Quit the game.\n");
+                return;
+            }
         }
 
         private void PrintDoors(Door[] doors)

@@ -45,7 +45,7 @@ namespace MontyHallTests
             Console.SetIn(stringReader);
             Console.SetOut(stringWriter);
 
-            var expectedQuitMessage = "You have Quit the game.\n";
+            const string expectedQuitMessage = "You have Quit the game.\n";
             
             // Act
             _montyHallView.Play(_randomizer);
