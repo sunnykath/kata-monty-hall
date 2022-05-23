@@ -53,6 +53,23 @@ namespace MontyHallTests
             // Assert
             Assert.Contains(expectedQuitMessage, stringWriter.ToString());
         }
-        
+
+        [Fact]
+        public void GivenTheDoorsArePrinted_WhenTheUserIsPromptedToSelectADoor_ThenTheUsersSelectionShouldBeDisplayedINThePOutput()
+        {
+            // Arrange
+            var stringReader = new StringReader("1\n");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+
+            const string expectedOutcome = "#Door 1#\t#Selected#"; 
+            
+            // Act
+            _montyHallView.Play(_randomizer);
+            
+            // Assert
+            Assert.Contains(expectedOutcome, stringWriter.ToString());
+        }
     }
 }
