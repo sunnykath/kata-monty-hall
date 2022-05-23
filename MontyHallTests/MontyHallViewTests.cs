@@ -8,13 +8,19 @@ namespace MontyHallTests
 {
     public class MontyHallViewTests
     {
+        private MontyHallView _montyHallView;
+        private CustomRandomizer _randomizer;
 
+        public MontyHallViewTests()
+        {
+            _montyHallView = new MontyHallView();
+            _randomizer = new CustomRandomizer();
+        }
+        
         [Fact]
         public void GivenAMontyHallView_WhenPlayIsCalled_ThenShouldDisplayTheThreeDoorsToSelectFrom()
         {
             // Arrange
-            var montyHallView = new MontyHallView();
-            var randomizer = new CustomRandomizer();
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
 
@@ -23,10 +29,29 @@ namespace MontyHallTests
                                           "#Door 3#\t#Closed#\n";
             
             // Act
-            montyHallView.Play(randomizer);
+            _montyHallView.Play(_randomizer);
 
             // Assert
             Assert.Contains(expectedOutput, stringWriter.ToString());
+        }
+
+        [Fact]
+        public void GivenAMontyHallView_WhenPlayIsCalledOnce_ThenTheUserShouldBeAbleToQuitTheGameByInputtingQ()
+        {
+            // Arrange
+            var stringReader = new StringReader("q");
+            var stringWriter = new StringWriter();
+            
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+
+            var expectedQuitMessage = "You have Quit the game.\n";
+            
+            // Act
+            _montyHallView.Play(_randomizer);
+            
+            // Assert
+            Assert.Contains(expectedQuitMessage, stringWriter.ToString());
         }
         
     }
