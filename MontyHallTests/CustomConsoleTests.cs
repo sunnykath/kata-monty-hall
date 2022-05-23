@@ -80,7 +80,7 @@ namespace MontyHallTests
         public void GivenACustomConsole_WhenPrintOutputIsCalled_ThenShouldPrintTheOutputToTheConsole()
         {
             // Arrange
-            const string expectedOutput = "Hello World From A Custom Console";
+            const string expectedOutput = "Hello World From A Custom Console\n";
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
             

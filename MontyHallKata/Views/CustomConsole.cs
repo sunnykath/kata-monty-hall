@@ -28,5 +28,10 @@ namespace MontyHallKata.Views
 
             return inputInt;
         }
+
+        public void PrintOutput(string outputString)
+        {
+            Console.Write(outputString);
+        }
     }
 }   
