@@ -10,20 +10,41 @@ namespace MontyHallTests
 {
     public class MontyHallViewTests
     {
-        private MontyHallView _montyHallView;
-        private CustomRandomizer _randomizer;
+        private readonly MontyHallView _montyHallView;
+        private readonly CustomRandomizer _randomizer;
 
         public MontyHallViewTests()
         {
             _montyHallView = new MontyHallView();
             _randomizer = new CustomRandomizer();
         }
+
+        [Fact]
+        public void GivenAMontyHallView_WhenPlayIsCalled_ThenTheUserShouldBeGivenTheOptionToQuitByInputtingZero()
+        {
+            
+            // Arrange
+            var stringReader = new StringReader("0\n");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+
+            const string expectedOutput = "You have quit the game.\n";
+
+            // Act
+            _montyHallView.Play(_randomizer);
+
+            // Assert
+            Assert.Contains(expectedOutput, stringWriter.ToString());
+        }
         
         [Fact]
         public void GivenAMontyHallView_WhenPlayIsCalled_ThenShouldDisplayTheThreeDoorsToSelectFrom()
         {
             // Arrange
+            var stringReader = new StringReader("0\n");
             var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
             Console.SetOut(stringWriter);
 
             const string expectedOutput = "#Door 1#\t#Closed#\n" +
@@ -38,29 +59,10 @@ namespace MontyHallTests
         }
 
         [Fact]
-        public void GivenAMontyHallView_WhenPlayIsCalledOnce_ThenTheUserShouldBeAbleToQuitTheGameByInputtingQ()
-        {
-            // Arrange
-            var stringReader = new StringReader("q");
-            var stringWriter = new StringWriter();
-            
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
-
-            const string expectedQuitMessage = "You have Quit the game.\n";
-            
-            // Act
-            _montyHallView.Play(_randomizer);
-            
-            // Assert
-            Assert.Contains(expectedQuitMessage, stringWriter.ToString());
-        }
-
-        [Fact]
         public void GivenTheDoorsArePrinted_WhenTheUserIsPromptedToSelectADoor_ThenTheUsersSelectionShouldBeDisplayedInTheOutput()
         {
             // Arrange
-            var stringReader = new StringReader("1\nq\n");
+            var stringReader = new StringReader("1\n0\n");
             var stringWriter = new StringWriter();
             Console.SetIn(stringReader);
             Console.SetOut(stringWriter);
@@ -78,7 +80,7 @@ namespace MontyHallTests
         public void GivenTheDoorsArePrinted_WhenTheUserHasSelectedADoor_ThenOneOfTheRemainingDoorsShouldOpenAndShouldBeDisplayedInTheOutput()
         {
             // Arrange
-            var stringReader = new StringReader("1\nq\n");
+            var stringReader = new StringReader("1\n0\n");
             var stringWriter = new StringWriter();
             Console.SetIn(stringReader);
             Console.SetOut(stringWriter);
