@@ -34,13 +34,35 @@ namespace MontyHallKata.Views
             
             PrintDoors(game.RandomlyOrderedDoors);
 
+            var choice = GetUserChoice();
+
+            switch (choice)
+            {
+                case 0:
+                    _customConsole.PrintOutput("You have quit the game.\n");
+                    return;
+                case 2:
+                    game.SwitchDoorSelection();
+                    break;
+            }
+            
+            PrintDoors(game.RandomlyOrderedDoors);
+
+        }
+
+        private int GetUserChoice()
+        {
+            _customConsole.PrintOutput("Would you like to switch or stay with you selection?:\n" +
+                                       "1\t-\tStay\n"+
+                                       "2\t-\tSwitch\n"+
+                                       "0\t-\tQuit\n");
+            return _customConsole.GetIntInput();
         }
 
         private int GetDoorSelectionFromUser()
         {
             _customConsole.PrintOutput("Select a door to begin (or enter 0 to quit): ");
-            var intInput = _customConsole.GetIntInput();
-            return intInput ;
+            return _customConsole.GetIntInput();
         }
 
         private void PrintDoors(Door[] doors)
