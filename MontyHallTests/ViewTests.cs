@@ -43,5 +43,24 @@ namespace MontyHallTests
             Assert.Contains(Constants.ChoicePromptMessage, stringWriter.ToString());
             Assert.Equal(expectedChoice, userChoice);
         }
+
+        [Fact]
+        public void GivenTheMontyHallView_WhenGetDoorSelectionIsCalled_TheUserShouldBePromptedToSelectADoorAndTheChoiceShouldBeReturned()
+        {
+            // Arrange
+            const int expectedDoorSelection = 2;
+            var montyHallView = new MontyHallView();
+            var stringReader = new StringReader($"{expectedDoorSelection}\n");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+            
+            // Act 
+            var doorSelection = montyHallView.GetDoorSelectionFromUser();
+            
+            // Assert
+            Assert.Contains(Constants.DoorSelectionPrompt, stringWriter.ToString());
+            Assert.Equal(expectedDoorSelection, doorSelection);
+        }
     }
 }

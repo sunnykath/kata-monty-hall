@@ -21,16 +21,13 @@ namespace MontyHallKata.Views
 
         public int GetUserChoice()
         {
-            _customConsole.PrintOutput("Would you like to switch or stay with you selection?:\n" +
-                                       "1\t-\tStay\n"+
-                                       "2\t-\tSwitch\n"+
-                                       "0\t-\tQuit\n");
+            _customConsole.PrintOutput(Constants.ChoicePromptMessage);
             return _customConsole.GetIntInput();
         }
 
         public int GetDoorSelectionFromUser()
         {   
-            _customConsole.PrintOutput("Select a door to begin (or enter 0 to quit): ");
+            _customConsole.PrintOutput(Constants.DoorSelectionPrompt);
             return _customConsole.GetIntInput();
         }
 
