@@ -12,56 +12,14 @@ namespace MontyHallKata.Views
         {
             _customConsole = new CustomConsole();
         }
-        public void Play(IRandomizer randomizer)
+
+        public void OutputFinalMessage(bool hasWonGame)
         {
-            var game = new MontyHallGame(randomizer);
-
-            PrintDoors(game.RandomlyOrderedDoors);
-
-            var doorSelection = GetDoorSelectionFromUser();
-            
-            if (doorSelection == 0)
-            {
-                _customConsole.PrintOutput("You have quit the game.\n");
-                return;
-            }
-            
-            game.SetSelectedDoor(doorSelection - 1);
-            
-            PrintDoors(game.RandomlyOrderedDoors);
-            
-            game.OpenAnUnselectedLosingDoor();
-            
-            PrintDoors(game.RandomlyOrderedDoors);
-
-            var choice = GetUserChoice();
-
-            switch (choice)
-            {
-                case 0:
-                    _customConsole.PrintOutput("You have quit the game.\n");
-                    return;
-                case 2:
-                    game.SwitchDoorSelection();
-                    break;
-            }
-            
-            PrintDoors(game.RandomlyOrderedDoors);
-
-            var hasWonGame = game.HasWonGame();
-            OutputFinalResult(hasWonGame);
-            
-            PrintDoors(game.RandomlyOrderedDoors);
-
-        }
-
-        private void OutputFinalResult(bool hasWonGame)
-        {
-            var finalOutputString = hasWonGame ? "You have won the game!\n" : "You have lost the game!\n";
+            var finalOutputString = hasWonGame ? Constants.WinningOutputMessage : Constants.LosingOutputMessage;
             _customConsole.PrintOutput(finalOutputString);
         }
 
-        private int GetUserChoice()
+        public int GetUserChoice()
         {
             _customConsole.PrintOutput("Would you like to switch or stay with you selection?:\n" +
                                        "1\t-\tStay\n"+
@@ -70,13 +28,13 @@ namespace MontyHallKata.Views
             return _customConsole.GetIntInput();
         }
 
-        private int GetDoorSelectionFromUser()
-        {
+        public int GetDoorSelectionFromUser()
+        {   
             _customConsole.PrintOutput("Select a door to begin (or enter 0 to quit): ");
             return _customConsole.GetIntInput();
         }
 
-        private void PrintDoors(Door[] doors)
+        public void PrintDoors(Door[] doors)
         {
             var outputString = "";
 
@@ -85,6 +43,11 @@ namespace MontyHallKata.Views
                 outputString += $"#Door {i + 1}#\t#{(doors[i].IsSelected ? "Selected" : doors[i].IsOpen ? "Open" : "Closed")}#\n";
             }
             _customConsole.PrintOutput(outputString);
+        }
+
+        public void OutputQuitMessage()
+        {
+            _customConsole.PrintOutput("You have quit the game.\n");
         }
     }
 }
