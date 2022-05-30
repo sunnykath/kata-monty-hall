@@ -64,7 +64,7 @@ namespace MontyHallTests
         }
 
         [Fact]
-        public void GivenTheMontyHallView_WhenOutputQuitMessageIsCalled_TheCorrectQuitMessageShouldBeOutputted()
+        public void GivenTheMontyHallView_WhenOutputQuitMessageIsCalled_ThenTheCorrectQuitMessageShouldBeOutputted()
         {
             // Arrange
             var montyHallView = new MontyHallView();
@@ -76,6 +76,43 @@ namespace MontyHallTests
             
             // Assert
             Assert.Contains(Constants.QuitOutputMessage, stringWriter.ToString());
+        }
+
+        [Fact]
+        public void GivenTheMontyHallView_WhenTheDoorsArePrinted_ThenTheDoorsShouldBePrintedCorrectlyWithTheirStatus()
+        {
+            // Arrange
+            var montyHallView = new MontyHallView();
+            var stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
+
+            var selectedDoor = new Door
+            {
+                IsSelected = true,
+                IsOpen = false
+            };
+            var openDoor = new Door
+            {
+                IsSelected = false,
+                IsOpen = true
+            };
+            var closedDoor = new Door
+            {
+                IsOpen = false,
+                IsSelected = false
+            };
+
+            var doors = new[] {closedDoor, selectedDoor, openDoor};
+            
+            const string expectedDoorsOutput = "#Door 1#\t#Closed#\n" +
+                                                "#Door 2#\t#Selected#\n" +
+                                                "#Door 3#\t#Open#\n"; 
+            
+             // Act 
+             montyHallView.PrintDoors(doors);
+            
+            // Assert
+            Assert.Contains(expectedDoorsOutput, stringWriter.ToString());
         }
     }
 }
