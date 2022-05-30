@@ -8,7 +8,6 @@ namespace MontyHallTests
 {
     public class ViewTests
     {
-
         [Theory]
         [InlineData(true, Constants.WinningOutputMessage)]
         [InlineData(false, Constants.LosingOutputMessage)]
@@ -24,6 +23,25 @@ namespace MontyHallTests
             
             // Assert
             Assert.Contains(expectedOutputMessage, stringWriter.ToString());
+        }
+
+        [Fact]
+        public void GivenTheMontyHallView_WhenGetUserChoiceIsCalled_TheUserShouldBePromptedWithTheChoiceToStaySwitchOrQuitAndTheChoiceShouldBeReturned()
+        {
+            // Arrange
+            const int expectedChoice = 1;
+            var montyHallView = new MontyHallView();
+            var stringReader = new StringReader($"{expectedChoice}\n");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+            
+            // Act 
+            var userChoice = montyHallView.GetUserChoice();
+            
+            // Assert
+            Assert.Contains(Constants.ChoicePromptMessage, stringWriter.ToString());
+            Assert.Equal(expectedChoice, userChoice);
         }
     }
 }
