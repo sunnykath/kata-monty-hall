@@ -106,13 +106,32 @@ namespace MontyHallTests
             
             const string expectedDoorsOutput = "#Door 1#\t#Closed#\n" +
                                                 "#Door 2#\t#Selected#\n" +
-                                                "#Door 3#\t#Open#\n"; 
+                                                "#Door 3#\t#Open#\n";
             
-             // Act 
-             montyHallView.PrintDoors(doors);
+            // Act 
+            montyHallView.PrintDoors(doors);
             
             // Assert
             Assert.Contains(expectedDoorsOutput, stringWriter.ToString());
+        }
+        
+        [Fact]
+        public void GivenGetDoorSelectionIsCalled_WhenTheUerInputsAnInvalidSelection_ThenShouldPrintInvalidInputMessageAndAskForInputAgain()
+        {
+            // Arrange
+            const int invalidDoorSelection = 5;
+            const int validDoorSelection = 2;
+            var montyHallView = new MontyHallView();
+            var stringReader = new StringReader($"{invalidDoorSelection}\n{validDoorSelection}\n");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+            
+            // Act
+            montyHallView.GetDoorSelectionFromUser();
+            
+            // Assert
+            Assert.Contains(Constants.InvalidInputMessage, stringWriter.ToString());
         }
     }
 }
