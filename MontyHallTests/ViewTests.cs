@@ -120,9 +120,9 @@ namespace MontyHallTests
         {
             // Arrange
             const int invalidDoorSelection = 5;
-            const int validDoorSelection = 2;
+            const int quitCommand = 0;
             var montyHallView = new MontyHallView();
-            var stringReader = new StringReader($"{invalidDoorSelection}\n{validDoorSelection}\n");
+            var stringReader = new StringReader($"{invalidDoorSelection}\n{quitCommand}\n");
             var stringWriter = new StringWriter();
             Console.SetIn(stringReader);
             Console.SetOut(stringWriter);

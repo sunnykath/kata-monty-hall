@@ -28,7 +28,15 @@ namespace MontyHallKata.Views
         public int GetDoorSelectionFromUser()
         {   
             _customConsole.PrintOutput(Constants.DoorSelectionPrompt);
-            return _customConsole.GetIntInput();
+
+            var doorSelection = _customConsole.GetIntInput();
+            while (doorSelection is < 0 or > 3)
+            {
+                _customConsole.PrintOutput(Constants.InvalidInputMessage);
+                doorSelection = _customConsole.GetIntInput();
+            }
+            
+            return doorSelection;
         }
 
         public void PrintDoors(Door[] doors)
