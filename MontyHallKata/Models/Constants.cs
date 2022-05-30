@@ -8,6 +8,8 @@ namespace MontyHallKata.Models
                                                   "0\t-\tQuit\n";
 
         public const string DoorSelectionPrompt = "Select a door to begin (or enter 0 to quit): ";
+
+        public const string QuitOutputMessage = "You have quit the game.\n";
         
         public const string WinningOutputMessage = "You have won the game!\n";
         public const string LosingOutputMessage = "You have lost the game!\n";

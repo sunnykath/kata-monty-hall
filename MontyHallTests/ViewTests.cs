@@ -62,5 +62,20 @@ namespace MontyHallTests
             Assert.Contains(Constants.DoorSelectionPrompt, stringWriter.ToString());
             Assert.Equal(expectedDoorSelection, doorSelection);
         }
+
+        [Fact]
+        public void GivenTheMontyHallView_WhenOutputQuitMessageIsCalled_TheCorrectQuitMessageShouldBeOutputted()
+        {
+            // Arrange
+            var montyHallView = new MontyHallView();
+            var stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
+            
+            // Act 
+            montyHallView.OutputQuitMessage();
+            
+            // Assert
+            Assert.Contains(Constants.QuitOutputMessage, stringWriter.ToString());
+        }
     }
 }

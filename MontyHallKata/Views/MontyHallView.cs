@@ -44,7 +44,7 @@ namespace MontyHallKata.Views
 
         public void OutputQuitMessage()
         {
-            _customConsole.PrintOutput("You have quit the game.\n");
+            _customConsole.PrintOutput(Constants.QuitOutputMessage);
         }
     }
 }
