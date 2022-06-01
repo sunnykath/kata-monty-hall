@@ -22,7 +22,14 @@ namespace MontyHallKata.Views
         public int GetUserChoice()
         {
             _customConsole.PrintOutput(Constants.ChoicePromptMessage);
-            return _customConsole.GetIntInput();
+            
+            var choice = _customConsole.GetIntInput();
+            while (!InputValidation.IsValidChoice(choice))
+            {
+                _customConsole.PrintOutput(Constants.InvalidInputMessage);
+                choice = _customConsole.GetIntInput();
+            }
+            return choice;
         }
 
         public int GetDoorSelectionFromUser()
@@ -30,12 +37,11 @@ namespace MontyHallKata.Views
             _customConsole.PrintOutput(Constants.DoorSelectionPrompt);
 
             var doorSelection = _customConsole.GetIntInput();
-            while (doorSelection is < 0 or > 3)
+            while (!InputValidation.IsValidDoorSelection(doorSelection))
             {
                 _customConsole.PrintOutput(Constants.InvalidInputMessage);
                 doorSelection = _customConsole.GetIntInput();
             }
-            
             return doorSelection;
         }
 

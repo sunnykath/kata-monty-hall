@@ -31,7 +31,7 @@ namespace MontyHallTests
             // Arrange
             const int expectedChoice = 1;
             var montyHallView = new MontyHallView();
-            var stringReader = new StringReader($"{expectedChoice}\n");
+            var stringReader = new StringReader($"{expectedChoice}\n\n");
             var stringWriter = new StringWriter();
             Console.SetIn(stringReader);
             Console.SetOut(stringWriter);
