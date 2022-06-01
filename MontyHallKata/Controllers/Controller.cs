@@ -1,5 +1,4 @@
-using System.Reflection.Metadata;
-using Microsoft.VisualBasic;
+using MontyHallKata.Models;
 using MontyHallKata.Models.Randomizer;
 using MontyHallKata.Views;
 
@@ -9,24 +8,54 @@ namespace MontyHallKata.Controllers
     {
         private MontyHallGame? _game;
         private MontyHallView _view;
+        private GameStatus _gameStatus;
+        
+        private enum GameStatus
+        {
+            Playing,
+            Quit,
+            Lost,
+            Won
+        }
 
         public Controller()
         {
-            _view = new MontyHallView(new CustomConsole());;
+            _gameStatus = GameStatus.Playing;
+            _view = new MontyHallView(new CustomConsole());
         }
 
         public void Play(CustomRandomizer randomizer)
         {
             _game = new MontyHallGame(randomizer);
 
-            var playerInput = new CustomConsole().GetIntInput();
+            int playerInput;
+            var doorSelected = false;
 
-            _view.PrintDoors(_game.RandomlyOrderedDoors);
-            
-            if (playerInput == 0)
+            while (_gameStatus == GameStatus.Playing)
             {
-                _view.OutputQuitMessage();
+                _view.PrintDoors(_game.RandomlyOrderedDoors);
+                
+                if (!doorSelected)
+                {
+                    playerInput = _view.GetDoorSelectionFromUser();
+                }
+                else
+                {
+                    playerInput = new CustomConsole().GetIntInput();
+                }
+
+                if (playerInput == 0)
+                {
+                    _gameStatus = GameStatus.Quit;
+                }
+                else if (!doorSelected)
+                {
+                    _game.SetSelectedDoor(playerInput - Constants.IndexAdjustment);
+                    doorSelected = true;
+                }
             }
+            
+            _view.OutputQuitMessage();
         }
     }
 }

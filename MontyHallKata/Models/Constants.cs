@@ -15,5 +15,7 @@ namespace MontyHallKata.Models
         public const string LosingOutputMessage = "You have lost the game!\n";
 
         public const string InvalidInputMessage = "Invalid Input, Please try again: ";
+
+        public const int IndexAdjustment = 1;
     }
 }
