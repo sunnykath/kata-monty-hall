@@ -18,7 +18,7 @@ namespace MontyHallTests
         }
         
         [Fact]
-        public void GivenAMontyHallView_WhenPlayIsCalled_ThenTheUserShouldBeGivenTheOptionToQuitByInputtingZero()
+        public void GivenAMontyHallController_WhenPlayIsCalled_ThenTheUserShouldBeGivenTheOptionToQuitByInputtingZero()
         {
             // Arrange
             var stringReader = new StringReader("0\n");
@@ -36,7 +36,7 @@ namespace MontyHallTests
         }
         
         [Fact]
-        public void GivenAMontyHallView_WhenPlayIsCalled_ThenShouldDisplayTheThreeDoorsToSelectFrom()
+        public void GivenAMontyHallController_WhenPlayIsCalled_ThenShouldDisplayTheThreeDoorsToSelectFrom()
         {
             // Arrange
             var stringReader = new StringReader("0\n");
@@ -55,24 +55,23 @@ namespace MontyHallTests
             Assert.Contains(expectedOutput, stringWriter.ToString());
         }
         
-        // [Fact]
-        // public void GivenTheDoorsArePrinted_WhenTheUserIsPromptedToSelectADoor_ThenTheUsersSelectionShouldBeDisplayedInTheOutput()
-        // {
-        //     // Arrange
-        //     var stringReader = new StringReader("1\n0\n");
-        //     var stringWriter = new StringWriter();
-        //     Console.SetIn(stringReader);
-        //     Console.SetOut(stringWriter);
-        //
-        //     const string expectedOutcome = "#Door 1#\t#Selected#"; 
-        //     
-        //
-        //     // Act
-        //     _montyHallView.Play(_randomizer);
-        //     
-        //     // Assert
-        //     Assert.Contains(expectedOutcome, stringWriter.ToString());
-        // }
+        [Fact]
+        public void GivenTheDoorsArePrinted_WhenTheUserIsPromptedToSelectADoor_ThenTheUserSelectionShouldBeDisplayedInTheOutput()
+        {
+            // Arrange
+            var stringReader = new StringReader("1\n0\n");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+        
+            const string expectedOutcome = "#Door 1#\t#Selected#"; 
+            
+            // Act
+            _controller.Play(_randomizer);
+            
+            // Assert
+            Assert.Contains(expectedOutcome, stringWriter.ToString());
+        }
         //
         // [Fact]
         // public void GivenTheDoorsArePrinted_WhenTheUserHasSelectedADoor_ThenOneOfTheRemainingDoorsShouldOpenAndShouldBeDisplayedInTheOutput()
