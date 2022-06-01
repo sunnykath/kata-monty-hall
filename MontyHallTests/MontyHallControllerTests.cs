@@ -16,24 +16,24 @@ namespace MontyHallTests
             _controller = new Controller();
             _randomizer = new CustomRandomizer();
         }
-        //
-        // [Fact]
-        // public void GivenAMontyHallView_WhenPlayIsCalled_ThenTheUserShouldBeGivenTheOptionToQuitByInputtingZero()
-        // {
-        //     // Arrange
-        //     var stringReader = new StringReader("0\n");
-        //     var stringWriter = new StringWriter();
-        //     Console.SetIn(stringReader);
-        //     Console.SetOut(stringWriter);
-        //
-        //     const string expectedOutput = "You have quit the game.\n";
-        //
-        //     // Act
-        //     _controller.Play(_randomizer);
-        //
-        //     // Assert
-        //     Assert.Contains(expectedOutput, stringWriter.ToString());
-        // }
+        
+        [Fact]
+        public void GivenAMontyHallView_WhenPlayIsCalled_ThenTheUserShouldBeGivenTheOptionToQuitByInputtingZero()
+        {
+            // Arrange
+            var stringReader = new StringReader("0\n");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+        
+            const string expectedOutput = "You have quit the game.\n";
+        
+            // Act
+            _controller.Play(_randomizer);
+        
+            // Assert
+            Assert.Contains(expectedOutput, stringWriter.ToString());
+        }
         //
         // [Fact]
         // public void GivenAMontyHallView_WhenPlayIsCalled_ThenShouldDisplayTheThreeDoorsToSelectFrom()
