@@ -21,6 +21,8 @@ namespace MontyHallKata.Controllers
 
             var playerInput = new CustomConsole().GetIntInput();
 
+            _view.PrintDoors(_game.RandomlyOrderedDoors);
+            
             if (playerInput == 0)
             {
                 _view.OutputQuitMessage();
