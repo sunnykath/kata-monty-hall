@@ -8,9 +8,9 @@ namespace MontyHallKata.Views
     {
         private readonly CustomConsole _customConsole;
 
-        public MontyHallView()
+        public MontyHallView(CustomConsole customConsole)
         {
-            _customConsole = new CustomConsole();
+            _customConsole = customConsole;
         }
 
         public void OutputFinalMessage(bool hasWonGame)

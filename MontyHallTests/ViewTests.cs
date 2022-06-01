@@ -14,7 +14,7 @@ namespace MontyHallTests
         public void GivenTheGameWonBooleanIsPassedIn_WhenTheValueChanges_ThenTheOutputMessageShouldChangeAccordingly(bool hasWonGame, string expectedOutputMessage)
         {
             // Arrange 
-            var montyHallView = new MontyHallView();
+            var montyHallView = new MontyHallView(new CustomConsole());
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
             
@@ -30,7 +30,7 @@ namespace MontyHallTests
         {
             // Arrange
             const int expectedChoice = 1;
-            var montyHallView = new MontyHallView();
+            var montyHallView = new MontyHallView(new CustomConsole());
             var stringReader = new StringReader($"{expectedChoice}\n\n");
             var stringWriter = new StringWriter();
             Console.SetIn(stringReader);
@@ -49,7 +49,7 @@ namespace MontyHallTests
         {
             // Arrange
             const int expectedDoorSelection = 2;
-            var montyHallView = new MontyHallView();
+            var montyHallView = new MontyHallView(new CustomConsole());
             var stringReader = new StringReader($"{expectedDoorSelection}\n");
             var stringWriter = new StringWriter();
             Console.SetIn(stringReader);
@@ -67,7 +67,7 @@ namespace MontyHallTests
         public void GivenTheMontyHallView_WhenOutputQuitMessageIsCalled_ThenTheCorrectQuitMessageShouldBeOutputted()
         {
             // Arrange
-            var montyHallView = new MontyHallView();
+            var montyHallView = new MontyHallView(new CustomConsole());
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
             
@@ -82,7 +82,7 @@ namespace MontyHallTests
         public void GivenTheMontyHallView_WhenTheDoorsArePrinted_ThenTheDoorsShouldBePrintedCorrectlyWithTheirStatus()
         {
             // Arrange
-            var montyHallView = new MontyHallView();
+            var montyHallView = new MontyHallView(new CustomConsole());
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
 
@@ -121,7 +121,7 @@ namespace MontyHallTests
             // Arrange
             const int invalidDoorSelection = 5;
             const int quitCommand = 0;
-            var montyHallView = new MontyHallView();
+            var montyHallView = new MontyHallView(new CustomConsole());
             var stringReader = new StringReader($"{invalidDoorSelection}\n{quitCommand}\n");
             var stringWriter = new StringWriter();
             Console.SetIn(stringReader);
