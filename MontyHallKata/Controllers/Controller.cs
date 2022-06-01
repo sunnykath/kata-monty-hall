@@ -24,20 +24,25 @@ namespace MontyHallKata.Controllers
             _view = new MontyHallView(new CustomConsole());
         }
 
-        public void Play(CustomRandomizer randomizer)
+        public void Play(IRandomizer randomizer)
         {
             _game = new MontyHallGame(randomizer);
 
-            int playerInput;
             var doorSelected = false;
+            var choiceMade = false;
 
             while (_gameStatus == GameStatus.Playing)
             {
                 _view.PrintDoors(_game.RandomlyOrderedDoors);
-                
+
+                int playerInput;
                 if (!doorSelected)
                 {
                     playerInput = _view.GetDoorSelectionFromUser();
+                }
+                else if (!choiceMade)
+                {
+                    playerInput = _view.GetUserChoice();
                 }
                 else
                 {
@@ -52,6 +57,13 @@ namespace MontyHallKata.Controllers
                 {
                     _game.SetSelectedDoor(playerInput - Constants.IndexAdjustment);
                     doorSelected = true;
+                    _game.OpenAnUnselectedLosingDoor();
+                }
+                else if (!choiceMade)
+                {
+                    if (playerInput != 2) continue;
+                    _game.SwitchDoorSelection();
+                    choiceMade = true;
                 }
             }
             
