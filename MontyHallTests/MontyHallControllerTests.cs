@@ -34,27 +34,27 @@ namespace MontyHallTests
             // Assert
             Assert.Contains(expectedOutput, stringWriter.ToString());
         }
-        //
-        // [Fact]
-        // public void GivenAMontyHallView_WhenPlayIsCalled_ThenShouldDisplayTheThreeDoorsToSelectFrom()
-        // {
-        //     // Arrange
-        //     var stringReader = new StringReader("0\n");
-        //     var stringWriter = new StringWriter();
-        //     Console.SetIn(stringReader);
-        //     Console.SetOut(stringWriter);
-        //
-        //     const string expectedOutput = "#Door 1#\t#Closed#\n" +
-        //                                   "#Door 2#\t#Closed#\n" +
-        //                                   "#Door 3#\t#Closed#\n";
-        //     
-        //     // Act
-        //     _montyHallView.Play(_randomizer);
-        //
-        //     // Assert
-        //     Assert.Contains(expectedOutput, stringWriter.ToString());
-        // }
-        //
+        
+        [Fact]
+        public void GivenAMontyHallView_WhenPlayIsCalled_ThenShouldDisplayTheThreeDoorsToSelectFrom()
+        {
+            // Arrange
+            var stringReader = new StringReader("0\n");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+        
+            const string expectedOutput = "#Door 1#\t#Closed#\n" +
+                                          "#Door 2#\t#Closed#\n" +
+                                          "#Door 3#\t#Closed#\n";
+            
+            // Act
+            _controller.Play(_randomizer);
+        
+            // Assert
+            Assert.Contains(expectedOutput, stringWriter.ToString());
+        }
+        
         // [Fact]
         // public void GivenTheDoorsArePrinted_WhenTheUserIsPromptedToSelectADoor_ThenTheUsersSelectionShouldBeDisplayedInTheOutput()
         // {
