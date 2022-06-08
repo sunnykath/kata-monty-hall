@@ -9,9 +9,9 @@ namespace MontyHallTests
     public class ViewTests
     {
         [Theory]
-        [InlineData(true, Constants.WinningOutputMessage)]
-        [InlineData(false, Constants.LosingOutputMessage)]
-        public void GivenTheGameWonBooleanIsPassedIn_WhenTheValueChanges_ThenTheOutputMessageShouldChangeAccordingly(bool hasWonGame, string expectedOutputMessage)
+        [InlineData(GameStatus.Won, Constants.WinningOutputMessage)]
+        [InlineData(GameStatus.Lost, Constants.LosingOutputMessage)]
+        public void GivenTheGameWonBooleanIsPassedIn_WhenTheValueChanges_ThenTheOutputMessageShouldChangeAccordingly(GameStatus gameStatus, string expectedOutputMessage)
         {
             // Arrange 
             var montyHallView = new MontyHallView(new CustomConsole());
@@ -19,7 +19,7 @@ namespace MontyHallTests
             Console.SetOut(stringWriter);
             
             // Act 
-            montyHallView.OutputFinalMessage(hasWonGame);
+            montyHallView.HandleOutputMessage(gameStatus);
             
             // Assert
             Assert.Contains(expectedOutputMessage, stringWriter.ToString());
@@ -31,7 +31,7 @@ namespace MontyHallTests
             // Arrange
             const int expectedChoice = 1;
             var montyHallView = new MontyHallView(new CustomConsole());
-            var stringReader = new StringReader($"{expectedChoice}\n\n");
+            var stringReader = new StringReader($"{expectedChoice}\n");
             var stringWriter = new StringWriter();
             Console.SetIn(stringReader);
             Console.SetOut(stringWriter);
@@ -72,7 +72,7 @@ namespace MontyHallTests
             Console.SetOut(stringWriter);
             
             // Act 
-            montyHallView.OutputQuitMessage();
+            montyHallView.HandleOutputMessage(GameStatus.Quit);
             
             // Assert
             Assert.Contains(Constants.QuitOutputMessage, stringWriter.ToString());

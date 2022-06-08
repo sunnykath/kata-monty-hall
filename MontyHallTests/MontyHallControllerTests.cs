@@ -104,7 +104,7 @@ namespace MontyHallTests
         public void GivenTheUserHasSelectedADoor_WhenOneOfTheRemainingDoorsOpens_ThenTheUserShouldBeAbleToSwitchOrStayWithTheirInitialSelection()
         {
             // Arrange
-            var stringReader = new StringReader("1\n2\n0\n");
+            var stringReader = new StringReader("1\n2\n");
             var stringWriter = new StringWriter();
             Console.SetIn(stringReader);
             Console.SetOut(stringWriter);
@@ -129,29 +129,29 @@ namespace MontyHallTests
             Assert.Contains(expectedDoorsOutput, stringWriter.ToString());
         }
         
-        // [Fact]
-        // public void GivenOneOfTheRemainingDoorsHasOpened_WhenTheUserHasMadeTheirChoice_ThenTheResultOfTheGameShouldBeRevealed()
-        // {
-        //     // Arrange
-        //     var stringReader = new StringReader("1\n2\n");
-        //     var stringWriter = new StringWriter();
-        //     Console.SetIn(stringReader);
-        //     Console.SetOut(stringWriter);
-        //     
-        //     var mockRandomizer = new Mock<IRandomizer>();
-        //     mockRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
-        //         .Returns(() => new[]
-        //         {
-        //             DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
-        //         });
-        //
-        //     const string expectedResult = "You have won the game!";
-        //     
-        //     // Act
-        //     _montyHallView.Play(mockRandomizer.Object);
-        //     
-        //     // Assert
-        //     Assert.Contains(expectedResult, stringWriter.ToString());
-        // }
+        [Fact]
+        public void GivenOneOfTheRemainingDoorsHasOpened_WhenTheUserHasMadeTheirChoice_ThenTheResultOfTheGameShouldBeRevealed()
+        {
+            // Arrange
+            var stringReader = new StringReader("1\n2\n0");
+            var stringWriter = new StringWriter();
+            Console.SetIn(stringReader);
+            Console.SetOut(stringWriter);
+            
+            var mockRandomizer = new Mock<IRandomizer>();
+            mockRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
+                .Returns(() => new[]
+                {
+                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
+                });
+        
+            const string expectedResult = "You have won the game!";
+            
+            // Act
+            _controller.Play(mockRandomizer.Object);
+            
+            // Assert
+            Assert.Contains(expectedResult, stringWriter.ToString());
+        }
     }
 }

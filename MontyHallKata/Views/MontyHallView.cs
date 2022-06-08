@@ -1,6 +1,5 @@
-using MontyHallKata.Controllers;
+using System;
 using MontyHallKata.Models;
-using MontyHallKata.Models.Randomizer;
 
 namespace MontyHallKata.Views
 {
@@ -11,12 +10,6 @@ namespace MontyHallKata.Views
         public MontyHallView(CustomConsole customConsole)
         {
             _customConsole = customConsole;
-        }
-
-        public void OutputFinalMessage(bool hasWonGame)
-        {
-            var finalOutputString = hasWonGame ? Constants.WinningOutputMessage : Constants.LosingOutputMessage;
-            _customConsole.PrintOutput(finalOutputString);
         }
 
         public int GetUserChoice()
@@ -55,10 +48,37 @@ namespace MontyHallKata.Views
             }
             _customConsole.PrintOutput(outputString);
         }
-
-        public void OutputQuitMessage()
+        
+        public int GetPlayerInput(bool doorSelected , bool choiceMade)
         {
-            _customConsole.PrintOutput(Constants.QuitOutputMessage);
+            var playerInput = -1;
+            if (!doorSelected)
+            {
+                playerInput = GetDoorSelectionFromUser();
+            }
+            else if (!choiceMade)
+            {
+                playerInput = GetUserChoice();
+            }
+            return playerInput;
+        }
+
+        public void HandleOutputMessage(GameStatus gameStatus)
+        {
+            switch (gameStatus)
+            {
+                case GameStatus.Quit:
+                    _customConsole.PrintOutput(Constants.QuitOutputMessage);
+                    break;
+                case GameStatus.Lost:
+                    _customConsole.PrintOutput(Constants.LosingOutputMessage);
+                    break;
+                case GameStatus.Won: 
+                    _customConsole.PrintOutput(Constants.WinningOutputMessage);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
