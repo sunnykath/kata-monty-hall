@@ -1,28 +1,36 @@
 using System;
 using System.IO;
 using MontyHallKata.Models;
+using MontyHallKata.Models.Entity;
 using MontyHallKata.Views;
+using MontyHallKata.Views.Console;
+using Moq;
 using Xunit;
 
 namespace MontyHallTests
 {
     public class ViewTests
     {
+        private readonly Mock<IConsole> _mockedConsole;
+        private readonly MontyHallView _montyHallView;
+        public ViewTests()
+        {
+            _mockedConsole = new Mock<IConsole>();
+            _montyHallView = new MontyHallView(_mockedConsole.Object);
+        }
+        
         [Theory]
         [InlineData(GameStatus.Won, Constants.WinningOutputMessage)]
         [InlineData(GameStatus.Lost, Constants.LosingOutputMessage)]
         public void GivenTheGameWonBooleanIsPassedIn_WhenTheValueChanges_ThenTheOutputMessageShouldChangeAccordingly(GameStatus gameStatus, string expectedOutputMessage)
         {
             // Arrange 
-            var montyHallView = new MontyHallView(new CustomConsole());
-            var stringWriter = new StringWriter();
-            Console.SetOut(stringWriter);
-            
+            _mockedConsole.Setup(console => console.PrintOutput(expectedOutputMessage));
             // Act 
-            montyHallView.HandleOutputMessage(gameStatus);
+            _montyHallView.HandleOutputMessage(gameStatus);
             
             // Assert
-            Assert.Contains(expectedOutputMessage, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
 
         [Fact]
@@ -30,17 +38,16 @@ namespace MontyHallTests
         {
             // Arrange
             const int expectedChoice = 1;
-            var montyHallView = new MontyHallView(new CustomConsole());
-            var stringReader = new StringReader($"{expectedChoice}\n");
-            var stringWriter = new StringWriter();
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
+            _mockedConsole.Setup(console => console.GetIntInput())
+                .Returns(expectedChoice);
+            _mockedConsole.Setup(console => console.PrintOutput(Constants.ChoicePromptMessage))
+                .Verifiable();
             
             // Act 
-            var userChoice = montyHallView.GetUserChoice();
+            var userChoice = _montyHallView.GetUserChoice();
             
             // Assert
-            Assert.Contains(Constants.ChoicePromptMessage, stringWriter.ToString());
+            _mockedConsole.Verify();
             Assert.Equal(expectedChoice, userChoice);
         }
 
@@ -49,17 +56,16 @@ namespace MontyHallTests
         {
             // Arrange
             const int expectedDoorSelection = 2;
-            var montyHallView = new MontyHallView(new CustomConsole());
-            var stringReader = new StringReader($"{expectedDoorSelection}\n");
-            var stringWriter = new StringWriter();
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
+            _mockedConsole.Setup(console => console.GetIntInput())
+                .Returns(expectedDoorSelection);
+            _mockedConsole.Setup(console => console.PrintOutput(Constants.DoorSelectionPrompt))
+                .Verifiable();
             
             // Act 
-            var doorSelection = montyHallView.GetDoorSelectionFromUser();
+            var doorSelection = _montyHallView.GetDoorSelectionFromUser();
             
             // Assert
-            Assert.Contains(Constants.DoorSelectionPrompt, stringWriter.ToString());
+            _mockedConsole.Verify();
             Assert.Equal(expectedDoorSelection, doorSelection);
         }
 
@@ -67,25 +73,20 @@ namespace MontyHallTests
         public void GivenTheMontyHallView_WhenOutputQuitMessageIsCalled_ThenTheCorrectQuitMessageShouldBeOutputted()
         {
             // Arrange
-            var montyHallView = new MontyHallView(new CustomConsole());
-            var stringWriter = new StringWriter();
-            Console.SetOut(stringWriter);
+            _mockedConsole.Setup(console => console.PrintOutput(Constants.QuitOutputMessage))
+                .Verifiable();
             
             // Act 
-            montyHallView.HandleOutputMessage(GameStatus.Quit);
+            _montyHallView.HandleOutputMessage(GameStatus.Quit);
             
             // Assert
-            Assert.Contains(Constants.QuitOutputMessage, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
 
         [Fact]
         public void GivenTheMontyHallView_WhenTheDoorsArePrinted_ThenTheDoorsShouldBePrintedCorrectlyWithTheirStatus()
         {
             // Arrange
-            var montyHallView = new MontyHallView(new CustomConsole());
-            var stringWriter = new StringWriter();
-            Console.SetOut(stringWriter);
-
             var selectedDoor = new Door
             {
                 IsSelected = true,
@@ -108,11 +109,14 @@ namespace MontyHallTests
                                                 "#Door 2#\t#Selected#\n" +
                                                 "#Door 3#\t#Open#\n";
             
+            _mockedConsole.Setup(console => console.PrintOutput(expectedDoorsOutput))
+                .Verifiable();
+            
             // Act 
-            montyHallView.PrintDoors(doors);
+            _montyHallView.PrintDoors(doors);
             
             // Assert
-            Assert.Contains(expectedDoorsOutput, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
         
         [Fact]
@@ -121,17 +125,18 @@ namespace MontyHallTests
             // Arrange
             const int invalidDoorSelection = 5;
             const int quitCommand = 0;
-            var montyHallView = new MontyHallView(new CustomConsole());
-            var stringReader = new StringReader($"{invalidDoorSelection}\n{quitCommand}\n");
-            var stringWriter = new StringWriter();
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
+            
+            _mockedConsole.SetupSequence(c => c.GetIntInput())
+                .Returns(invalidDoorSelection)
+                .Returns(quitCommand);
+            _mockedConsole.Setup(console => console.PrintOutput(Constants.InvalidInputMessage))
+                .Verifiable();
             
             // Act
-            montyHallView.GetDoorSelectionFromUser();
+            _montyHallView.GetDoorSelectionFromUser();
             
             // Assert
-            Assert.Contains(Constants.InvalidInputMessage, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
     }
 }

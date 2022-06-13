@@ -1,8 +1,8 @@
-using System;
-using System.IO;
 using MontyHallKata.Controllers;
 using MontyHallKata.Models;
+using MontyHallKata.Models.Entity;
 using MontyHallKata.Models.Randomizer;
+using MontyHallKata.Views.Console;
 using Moq;
 using Xunit;
 
@@ -12,10 +12,14 @@ namespace MontyHallTests
     {
         private readonly Controller _controller;
         private readonly CustomRandomizer _randomizer;
+        private readonly Mock<IConsole> _mockedConsole;
+        private readonly Mock<IRandomizer> _mockedRandomizer;
 
         public MontyHallControllerTests()
         {
-            _controller = new Controller();
+            _mockedRandomizer = new Mock<IRandomizer>();
+            _mockedConsole = new Mock<IConsole>();
+            _controller = new Controller(_mockedConsole.Object);
             _randomizer = new CustomRandomizer();
         }
         
@@ -23,135 +27,152 @@ namespace MontyHallTests
         public void GivenAMontyHallController_WhenPlayIsCalled_ThenTheUserShouldBeGivenTheOptionToQuitByInputtingZero()
         {
             // Arrange
-            var stringReader = new StringReader("0\n");
-            var stringWriter = new StringWriter();
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
-        
-            const string expectedOutput = "You have quit the game.\n";
-        
+            const string expectedOutput = Constants.QuitOutputMessage;
+            
+            _mockedConsole.Setup(console => console.GetIntInput())
+                .Returns(0);
+            
+            _mockedConsole.Setup(console => console.PrintOutput(expectedOutput))
+                .Verifiable();
+
             // Act
             _controller.Play(_randomizer);
         
             // Assert
-            Assert.Contains(expectedOutput, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
         
         [Fact]
         public void GivenAMontyHallController_WhenPlayIsCalled_ThenShouldDisplayTheThreeDoorsToSelectFrom()
         {
             // Arrange
-            var stringReader = new StringReader("0\n");
-            var stringWriter = new StringWriter();
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
-        
             const string expectedOutput = "#Door 1#\t#Closed#\n" +
                                           "#Door 2#\t#Closed#\n" +
                                           "#Door 3#\t#Closed#\n";
+            _mockedConsole.Setup(console => console.GetIntInput())
+                .Returns(0);
+            
+            _mockedConsole.Setup(console => console.PrintOutput(expectedOutput))
+                .Verifiable();
             
             // Act
             _controller.Play(_randomizer);
         
             // Assert
-            Assert.Contains(expectedOutput, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
         
         [Fact]
         public void GivenTheDoorsArePrinted_WhenTheUserIsPromptedToSelectADoor_ThenTheUserSelectionShouldBeDisplayedInTheOutput()
         {
             // Arrange
-            var stringReader = new StringReader("1\n0\n");
-            var stringWriter = new StringWriter();
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
-        
-            const string expectedOutcome = "#Door 1#\t#Selected#"; 
+            _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
+                .Returns(() => new[]
+                {
+                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
+                });
+            
+            const string expectedOutput = "#Door 1#\t#Selected#\n"+
+                                          "#Door 2#\t#Closed#\n" +
+                                          "#Door 3#\t#Open#\n"; 
+            
+            _mockedConsole.SetupSequence(console => console.GetIntInput())
+                .Returns(1)
+                .Returns(0);
+            
+            _mockedConsole.Setup(console => console.PrintOutput(expectedOutput))
+                .Verifiable();
             
             // Act
-            _controller.Play(_randomizer);
+            _controller.Play(_mockedRandomizer.Object);
             
             // Assert
-            Assert.Contains(expectedOutcome, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
         
         [Fact]
         public void GivenTheDoorsArePrinted_WhenTheUserHasSelectedADoor_ThenOneOfTheRemainingDoorsShouldOpenAndShouldBeDisplayedInTheOutput()
         {
             // Arrange
-            var stringReader = new StringReader("1\n0\n");
-            var stringWriter = new StringWriter();
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
-            
-            var mockRandomizer = new Mock<IRandomizer>();
-            mockRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
+            _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
                 {
-                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
+                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor()
                 });
-        
-            const string expectedOutcome = "#Door 3#\t#Open#"; 
+            
+            const string expectedOutput = "#Door 1#\t#Selected#\n"+
+                                          "#Door 2#\t#Open#\n" +
+                                          "#Door 3#\t#Closed#\n"; 
+            
+            _mockedConsole.SetupSequence(console => console.GetIntInput())
+                .Returns(1)
+                .Returns(0);
+            
+            _mockedConsole.Setup(console => console.PrintOutput(expectedOutput))
+                .Verifiable();
+            
             
             // Act
-            _controller.Play(mockRandomizer.Object);
+            _controller.Play(_mockedRandomizer.Object);
             
             // Assert
-            Assert.Contains(expectedOutcome, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
         
         [Fact]
         public void GivenTheUserHasSelectedADoor_WhenOneOfTheRemainingDoorsOpens_ThenTheUserShouldBeAbleToSwitchOrStayWithTheirInitialSelection()
         {
-            // Arrange
-            var stringReader = new StringReader("1\n2\n");
-            var stringWriter = new StringWriter();
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
+            // Arrange 
+            const string expectedPromptOutput = Constants.ChoicePromptMessage;
+            const string expectedDoorsOutput = "#Door 1#\t#Closed#\n" +
+                                               "#Door 2#\t#Selected#\n" +
+                                               "#Door 3#\t#Open#\n"; 
             
-            var mockRandomizer = new Mock<IRandomizer>();
-            mockRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
+            _mockedConsole.SetupSequence(console => console.GetIntInput())
+                .Returns(1)
+                .Returns(2);
+            
+            _mockedConsole.Setup(console => console.PrintOutput(expectedPromptOutput))
+                .Verifiable();
+            _mockedConsole.Setup(console => console.PrintOutput(expectedDoorsOutput))
+                .Verifiable();
+            
+            _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
                 {
                     DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
                 });
         
-            const string expectedPromptOutput = "Would you like to switch or stay with you selection?:";
-            const string expectedDoorsOutput = "#Door 1#\t#Closed#\n" +
-                                               "#Door 2#\t#Selected#\n" +
-                                               "#Door 3#\t#Open#\n"; 
-            
             // Act
-            _controller.Play(mockRandomizer.Object);
+            _controller.Play(_mockedRandomizer.Object);
             
             // Assert
-            Assert.Contains(expectedPromptOutput, stringWriter.ToString());
-            Assert.Contains(expectedDoorsOutput, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
         
         [Fact]
         public void GivenOneOfTheRemainingDoorsHasOpened_WhenTheUserHasMadeTheirChoice_ThenTheResultOfTheGameShouldBeRevealed()
         {
             // Arrange
-            var stringReader = new StringReader("1\n2\n0");
-            var stringWriter = new StringWriter();
-            Console.SetIn(stringReader);
-            Console.SetOut(stringWriter);
+            const string expectedResult = Constants.WinningOutputMessage;
             
-            var mockRandomizer = new Mock<IRandomizer>();
-            mockRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
+            _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
                 {
                     DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
                 });
-        
-            const string expectedResult = "You have won the game!";
             
+            _mockedConsole.SetupSequence(console => console.GetIntInput())
+                .Returns(1)
+                .Returns(2);
+            _mockedConsole.Setup(console => console.PrintOutput(expectedResult))
+                .Verifiable();
+        
             // Act
-            _controller.Play(mockRandomizer.Object);
+            _controller.Play(_mockedRandomizer.Object);
             
             // Assert
-            Assert.Contains(expectedResult, stringWriter.ToString());
+            _mockedConsole.Verify();
         }
     }
 }
