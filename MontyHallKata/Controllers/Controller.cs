@@ -8,6 +8,8 @@ namespace MontyHallKata.Controllers
 {
     public class Controller
     {
+        private const int IndexAdjustment = 1;
+        
         private MontyHallGame? _game;
         private MontyHallView _view;
         private GameStatus _gameStatus;
@@ -67,7 +69,7 @@ namespace MontyHallKata.Controllers
 
         private void HandleDoorSelection(int doorSelection)
         {
-            _game.SetSelectedDoor(doorSelection - Constants.IndexAdjustment);
+            _game.SetSelectedDoor(doorSelection - IndexAdjustment);
             _game.OpenAnUnselectedLosingDoor();
         }
     }

@@ -1,6 +1,6 @@
-namespace MontyHallKata.Models
+namespace MontyHallKata.Views.Console
 {
-    public static class Constants
+    public static class IOMessages
     {
         public const string ChoicePromptMessage = "Would you like to switch or stay with you selection?:\n" +
                                                   "1\t-\tStay\n" +
@@ -16,6 +16,5 @@ namespace MontyHallKata.Models
 
         public const string InvalidInputMessage = "Invalid Input, Please try again: ";
 
-        public const int IndexAdjustment = 1;
     }
 }

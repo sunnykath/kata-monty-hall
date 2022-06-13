@@ -16,12 +16,12 @@ namespace MontyHallKata.Views
 
         public int GetUserChoice()
         {
-            _customConsole.PrintOutput(Constants.ChoicePromptMessage);
+            _customConsole.PrintOutput(IOMessages.ChoicePromptMessage);
             
             var choice = _customConsole.GetIntInput();
             while (!InputValidation.IsValidChoice(choice))
             {
-                _customConsole.PrintOutput(Constants.InvalidInputMessage);
+                _customConsole.PrintOutput(IOMessages.InvalidInputMessage);
                 choice = _customConsole.GetIntInput();
             }
             return choice;
@@ -29,12 +29,12 @@ namespace MontyHallKata.Views
 
         public int GetDoorSelectionFromUser()
         {   
-            _customConsole.PrintOutput(Constants.DoorSelectionPrompt);
+            _customConsole.PrintOutput(IOMessages.DoorSelectionPrompt);
 
             var doorSelection = _customConsole.GetIntInput();
             while (!InputValidation.IsValidDoorSelection(doorSelection))
             {
-                _customConsole.PrintOutput(Constants.InvalidInputMessage);
+                _customConsole.PrintOutput(IOMessages.InvalidInputMessage);
                 doorSelection = _customConsole.GetIntInput();
             }
             return doorSelection;
@@ -70,13 +70,13 @@ namespace MontyHallKata.Views
             switch (gameStatus)
             {
                 case GameStatus.Quit:
-                    _customConsole.PrintOutput(Constants.QuitOutputMessage);
+                    _customConsole.PrintOutput(IOMessages.QuitOutputMessage);
                     break;
                 case GameStatus.Lost:
-                    _customConsole.PrintOutput(Constants.LosingOutputMessage);
+                    _customConsole.PrintOutput(IOMessages.LosingOutputMessage);
                     break;
                 case GameStatus.Won: 
-                    _customConsole.PrintOutput(Constants.WinningOutputMessage);
+                    _customConsole.PrintOutput(IOMessages.WinningOutputMessage);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -27,7 +27,7 @@ namespace MontyHallTests
         public void GivenAMontyHallController_WhenPlayIsCalled_ThenTheUserShouldBeGivenTheOptionToQuitByInputtingZero()
         {
             // Arrange
-            const string expectedOutput = Constants.QuitOutputMessage;
+            const string expectedOutput = IOMessages.QuitOutputMessage;
             
             _mockedConsole.Setup(console => console.GetIntInput())
                 .Returns(0);
@@ -123,7 +123,7 @@ namespace MontyHallTests
         public void GivenTheUserHasSelectedADoor_WhenOneOfTheRemainingDoorsOpens_ThenTheUserShouldBeAbleToSwitchOrStayWithTheirInitialSelection()
         {
             // Arrange 
-            const string expectedPromptOutput = Constants.ChoicePromptMessage;
+            const string expectedPromptOutput = IOMessages.ChoicePromptMessage;
             const string expectedDoorsOutput = "#Door 1#\t#Closed#\n" +
                                                "#Door 2#\t#Selected#\n" +
                                                "#Door 3#\t#Open#\n"; 
@@ -154,7 +154,7 @@ namespace MontyHallTests
         public void GivenOneOfTheRemainingDoorsHasOpened_WhenTheUserHasMadeTheirChoice_ThenTheResultOfTheGameShouldBeRevealed()
         {
             // Arrange
-            const string expectedResult = Constants.WinningOutputMessage;
+            const string expectedResult = IOMessages.WinningOutputMessage;
             
             _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
