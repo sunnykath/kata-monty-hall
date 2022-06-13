@@ -9,11 +9,11 @@ namespace MontyHallTests
     public class ViewTests
     {
         private readonly Mock<IConsole> _mockedConsole;
-        private readonly MontyHallView _montyHallView;
+        private readonly View _view;
         public ViewTests()
         {
             _mockedConsole = new Mock<IConsole>();
-            _montyHallView = new MontyHallView(_mockedConsole.Object);
+            _view = new View(_mockedConsole.Object);
         }
         
         [Theory]
@@ -24,7 +24,7 @@ namespace MontyHallTests
             // Arrange 
             _mockedConsole.Setup(console => console.PrintOutput(expectedOutputMessage));
             // Act 
-            _montyHallView.HandleOutputMessage(gameStatus);
+            _view.HandleOutputMessage(gameStatus);
             
             // Assert
             _mockedConsole.Verify();
@@ -41,7 +41,7 @@ namespace MontyHallTests
                 .Verifiable();
             
             // Act 
-            var userChoice = _montyHallView.GetUserChoice();
+            var userChoice = _view.GetUserChoice();
             
             // Assert
             _mockedConsole.Verify();
@@ -59,7 +59,7 @@ namespace MontyHallTests
                 .Verifiable();
             
             // Act 
-            var doorSelection = _montyHallView.GetDoorSelectionFromUser();
+            var doorSelection = _view.GetDoorSelectionFromUser();
             
             // Assert
             _mockedConsole.Verify();
@@ -74,7 +74,7 @@ namespace MontyHallTests
                 .Verifiable();
             
             // Act 
-            _montyHallView.HandleOutputMessage(GameStatus.Quit);
+            _view.HandleOutputMessage(GameStatus.Quit);
             
             // Assert
             _mockedConsole.Verify();
@@ -110,7 +110,7 @@ namespace MontyHallTests
                 .Verifiable();
             
             // Act 
-            _montyHallView.PrintDoors(doors);
+            _view.PrintDoors(doors);
             
             // Assert
             _mockedConsole.Verify();
@@ -130,7 +130,7 @@ namespace MontyHallTests
                 .Verifiable();
             
             // Act
-            _montyHallView.GetDoorSelectionFromUser();
+            _view.GetDoorSelectionFromUser();
             
             // Assert
             _mockedConsole.Verify();

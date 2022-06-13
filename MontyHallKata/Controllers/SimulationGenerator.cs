@@ -5,7 +5,7 @@ namespace MontyHallKata.Controllers
     public class SimulationGenerator
     {
         private readonly IRandomizer _randomizer;
-        private MontyHallGame? _game;
+        private Gameplay? _game;
         private const int MaxNumberOfDoors = 2;
 
         private int _winningPercentage;
@@ -21,7 +21,7 @@ namespace MontyHallKata.Controllers
             {
                 var doorSelection = _randomizer.GetRandomNumber(max: MaxNumberOfDoors);
                 
-                _game = new MontyHallGame(_randomizer);
+                _game = new Gameplay(_randomizer);
                 _game.SetSelectedDoor(doorSelection);
                 _game.OpenAnUnselectedLosingDoor();
 

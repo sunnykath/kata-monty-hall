@@ -8,14 +8,14 @@ using Xunit;
 
 namespace MontyHallTests
 {
-    public class MontyHallControllerTests
+    public class ControllerTests
     {
         private readonly Controller _controller;
         private readonly CustomRandomizer _randomizer;
         private readonly Mock<IConsole> _mockedConsole;
         private readonly Mock<IRandomizer> _mockedRandomizer;
 
-        public MontyHallControllerTests()
+        public ControllerTests()
         {
             _mockedRandomizer = new Mock<IRandomizer>();
             _mockedConsole = new Mock<IConsole>();

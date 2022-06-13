@@ -10,8 +10,8 @@ namespace MontyHallKata.Controllers
     {
         private const int IndexAdjustment = 1;
         
-        private MontyHallGame? _game;
-        private MontyHallView _view;
+        private Gameplay? _game;
+        private View _view;
         private GameStatus _gameStatus;
         
         private bool _doorSelected = false;
@@ -20,12 +20,12 @@ namespace MontyHallKata.Controllers
         public Controller(IConsole console)
         {
             _gameStatus = GameStatus.Playing;
-            _view = new MontyHallView(console);
+            _view = new View(console);
         }
 
         public void Play(IRandomizer randomizer)
         {
-            _game = new MontyHallGame(randomizer);
+            _game = new Gameplay(randomizer);
 
             while (_gameStatus == GameStatus.Playing)
             {

@@ -10,13 +10,13 @@ using Xunit;
 
 namespace MontyHallTests
 {
-    public class MontyHallGameTests
+    public class GameplayTests
     {
-        private readonly MontyHallGame _game;
-        public MontyHallGameTests()
+        private readonly Gameplay _game;
+        public GameplayTests()
         {
             var randomizer = new CustomRandomizer();
-            _game = new MontyHallGame(randomizer);
+            _game = new Gameplay(randomizer);
         }
         
         [Fact]
@@ -52,7 +52,7 @@ namespace MontyHallTests
             mockShuffler.Setup(shuffle => shuffle.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(expectedShuffledDoors)
                 .Verifiable();
-            var game = new MontyHallGame(mockShuffler.Object);
+            var game = new Gameplay(mockShuffler.Object);
             
             // Act
             var actualShuffledDoors = game.RandomlyOrderedDoors;

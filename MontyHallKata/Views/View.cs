@@ -5,11 +5,11 @@ using MontyHallKata.Views.Console;
 
 namespace MontyHallKata.Views
 {
-    public class MontyHallView
+    public class View
     {
         private readonly IConsole _customConsole;
 
-        public MontyHallView(IConsole customConsole)
+        public View(IConsole customConsole)
         {
             _customConsole = customConsole;
         }

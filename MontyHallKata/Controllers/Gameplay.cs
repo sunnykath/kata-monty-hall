@@ -6,13 +6,13 @@ using MontyHallKata.Models.Randomizer;
 
 namespace MontyHallKata.Controllers
 {
-    public class MontyHallGame
+    public class Gameplay
     {
         private readonly Door[] _defaultDoors = {DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateLosingDoor()};
 
         public readonly Door[] RandomlyOrderedDoors;
 
-        public MontyHallGame(IRandomizer shuffler)
+        public Gameplay(IRandomizer shuffler)
         {
             RandomlyOrderedDoors = shuffler.GetRandomizedArray(_defaultDoors);
         }
