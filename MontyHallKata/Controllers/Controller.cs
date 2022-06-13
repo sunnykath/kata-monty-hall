@@ -1,7 +1,8 @@
-using System;
 using MontyHallKata.Models;
+using MontyHallKata.Models.Entity;
 using MontyHallKata.Models.Randomizer;
 using MontyHallKata.Views;
+using MontyHallKata.Views.Console;
 
 namespace MontyHallKata.Controllers
 {
@@ -14,10 +15,10 @@ namespace MontyHallKata.Controllers
         private bool _doorSelected = false;
         private bool _choiceMade = false;
 
-        public Controller()
+        public Controller(IConsole console)
         {
             _gameStatus = GameStatus.Playing;
-            _view = new MontyHallView(new CustomConsole());
+            _view = new MontyHallView(console);
         }
 
         public void Play(IRandomizer randomizer)
@@ -32,6 +33,7 @@ namespace MontyHallKata.Controllers
 
                 HandleGameStatus(playerInput);
             }
+            _view.PrintDoors(_game.RandomlyOrderedDoors);
             _view.HandleOutputMessage(_gameStatus);
         }
 

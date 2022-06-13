@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Castle.Core.Internal;
 using MontyHallKata.Views;
+using MontyHallKata.Views.Console;
 using Xunit;
 
 namespace MontyHallTests

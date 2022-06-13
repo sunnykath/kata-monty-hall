@@ -1,13 +1,15 @@
 using System;
 using MontyHallKata.Models;
+using MontyHallKata.Models.Entity;
+using MontyHallKata.Views.Console;
 
 namespace MontyHallKata.Views
 {
     public class MontyHallView
     {
-        private readonly CustomConsole _customConsole;
+        private readonly IConsole _customConsole;
 
-        public MontyHallView(CustomConsole customConsole)
+        public MontyHallView(IConsole customConsole)
         {
             _customConsole = customConsole;
         }

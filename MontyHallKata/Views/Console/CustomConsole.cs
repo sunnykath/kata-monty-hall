@@ -1,16 +1,15 @@
-using System;
+using MontyHallKata.Models;
 
-namespace MontyHallKata.Views
+namespace MontyHallKata.Views.Console
 {
-    public class CustomConsole
+    public class CustomConsole : IConsole
     {
         public string GetStringInput()
         {
-            string? inputString; 
-                
+            string? inputString;
             do
             {
-                inputString = Console.ReadLine();
+                inputString = System.Console.ReadLine();
             } while (string.IsNullOrEmpty(inputString));
 
             return inputString;
@@ -31,7 +30,7 @@ namespace MontyHallKata.Views
 
         public void PrintOutput(string outputString)
         {
-            Console.Write(outputString);
+            System.Console.Write(outputString);
         }
     }
 }   
