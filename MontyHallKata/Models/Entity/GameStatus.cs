@@ -1,4 +1,4 @@
-namespace MontyHallKata.Models
+namespace MontyHallKata.Models.Entity
 {
     public enum GameStatus
     {

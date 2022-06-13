@@ -3,6 +3,7 @@ using System.Linq;
 using MontyHallKata;
 using MontyHallKata.Controllers;
 using MontyHallKata.Models;
+using MontyHallKata.Models.Entity;
 using MontyHallKata.Models.Randomizer;
 using Moq;
 using Xunit;

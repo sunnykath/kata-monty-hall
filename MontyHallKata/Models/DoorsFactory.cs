@@ -1,3 +1,5 @@
+using MontyHallKata.Models.Entity;
+
 namespace MontyHallKata.Models
 {
     public static class DoorsFactory

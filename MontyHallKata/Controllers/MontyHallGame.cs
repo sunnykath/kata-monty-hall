@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using MontyHallKata.Models;
+using MontyHallKata.Models.Entity;
 using MontyHallKata.Models.Randomizer;
 
 namespace MontyHallKata.Controllers
