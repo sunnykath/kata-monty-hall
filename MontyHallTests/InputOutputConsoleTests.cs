@@ -1,7 +1,5 @@
 using System;
 using System.IO;
-using Castle.Core.Internal;
-using MontyHallKata.Views;
 using MontyHallKata.Views.Console;
 using Xunit;
 
@@ -10,37 +8,20 @@ namespace MontyHallTests
     public class CustomConsoleTests
     {
         [Fact]
-        public void GivenACustomConsole_WhenGetStringInputIsCalled_ThenShouldReturnWhatWasInputtedInTheConsole()
+        public void GivenGetIntInputIsCalled_WhenTheInputIsNullOrEmpty_ThenShouldKeepAskingForANonEmptyInput()
         {
             // Arrange
-            const string expectedInputString = "Hello World"; 
-            var stringReader = new StringReader(expectedInputString);
+            const int expectedInput = 1234; 
+            var stringReader = new StringReader($"\n\n{expectedInput}");
             Console.SetIn(stringReader);
             
             var customConsole = new InputOutputConsole();
             
             // Act
-            var actualInputString = customConsole.GetStringInput();
+            var actualInputString = customConsole.GetIntInput();
             
             // Assert
-            Assert.Equal(expectedInputString, actualInputString);
-        }
-        
-        [Fact]
-        public void GivenGetStringInputIsCalled_WhenTheInputIsNullOrEmpty_ThenShouldKeepAskingForANonEmptyInput()
-        {
-            // Arrange
-            const string expectedInputString = "Hello World"; 
-            var stringReader = new StringReader($"\n\n{expectedInputString}");
-            Console.SetIn(stringReader);
-            
-            var customConsole = new InputOutputConsole();
-            
-            // Act
-            var actualInputString = customConsole.GetStringInput();
-            
-            // Assert
-            Assert.Equal(expectedInputString, actualInputString);
+            Assert.Equal(expectedInput, actualInputString);
         }
         
         [Fact]
