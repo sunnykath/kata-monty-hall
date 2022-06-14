@@ -12,10 +12,7 @@ namespace MontyHallKata
             var console = new InputOutputConsole();
             
             // Get user input and ask for simulations or play through
-            console.PrintOutput("What would you like to do?\n" +
-                                "1 - Run Simulations on monty hall\n" +
-                                "2 - Play through monty hall once\n" +
-                                "0 - Quit the program\n");
+            console.PrintOutput(InputOutputMessages.InitialChoicePrompt);
             var consoleInput =  console.GetIntInput();
 
             switch (consoleInput)
@@ -24,7 +21,7 @@ namespace MontyHallKata
                     // Simulation
                     var simulation = new SimulationGenerator(randomizer);
             
-                    console.PrintOutput("How many simulations would you like to run?\t");
+                    console.PrintOutput(InputOutputMessages.NumberOfSimulationsPrompt);
                     var numberOfSimulations = console.GetIntInput();
                     
                     simulation.Simulate(numberOfSimulations, "stay");
