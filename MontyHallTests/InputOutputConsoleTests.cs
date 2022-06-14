@@ -17,7 +17,7 @@ namespace MontyHallTests
             var stringReader = new StringReader(expectedInputString);
             Console.SetIn(stringReader);
             
-            var customConsole = new CustomConsole();
+            var customConsole = new InputOutputConsole();
             
             // Act
             var actualInputString = customConsole.GetStringInput();
@@ -34,7 +34,7 @@ namespace MontyHallTests
             var stringReader = new StringReader($"\n\n{expectedInputString}");
             Console.SetIn(stringReader);
             
-            var customConsole = new CustomConsole();
+            var customConsole = new InputOutputConsole();
             
             // Act
             var actualInputString = customConsole.GetStringInput();
@@ -51,7 +51,7 @@ namespace MontyHallTests
             var stringReader = new StringReader($"{expectedInputInt}");
             Console.SetIn(stringReader);
             
-            var customConsole = new CustomConsole();
+            var customConsole = new InputOutputConsole();
             
             // Act
             var actualInputString = customConsole.GetIntInput();
@@ -68,7 +68,7 @@ namespace MontyHallTests
             var stringReader = new StringReader($"hello\nR34D\n{expectedInputInt}");
             Console.SetIn(stringReader);
             
-            var customConsole = new CustomConsole();
+            var customConsole = new InputOutputConsole();
             
             // Act
             var actualInputString = customConsole.GetIntInput();
@@ -85,7 +85,7 @@ namespace MontyHallTests
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
             
-            var customConsole = new CustomConsole();
+            var customConsole = new InputOutputConsole();
             
             // Act
             customConsole.PrintOutput(expectedOutput);

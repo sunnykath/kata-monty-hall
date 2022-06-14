@@ -7,35 +7,35 @@ namespace MontyHallKata.Views
 {
     public class View
     {
-        private readonly IConsole _customConsole;
+        private readonly IInputOutput _inputOutputConsole;
 
-        public View(IConsole customConsole)
+        public View(IInputOutput inputOutputConsole)
         {
-            _customConsole = customConsole;
+            _inputOutputConsole = inputOutputConsole;
         }
 
         public int GetUserChoice()
         {
-            _customConsole.PrintOutput(IOMessages.ChoicePromptMessage);
+            _inputOutputConsole.PrintOutput(InputOutputMessages.ChoicePromptMessage);
             
-            var choice = _customConsole.GetIntInput();
+            var choice = _inputOutputConsole.GetIntInput();
             while (!InputValidation.IsValidChoice(choice))
             {
-                _customConsole.PrintOutput(IOMessages.InvalidInputMessage);
-                choice = _customConsole.GetIntInput();
+                _inputOutputConsole.PrintOutput(InputOutputMessages.InvalidInputMessage);
+                choice = _inputOutputConsole.GetIntInput();
             }
             return choice;
         }
 
         public int GetDoorSelectionFromUser()
         {   
-            _customConsole.PrintOutput(IOMessages.DoorSelectionPrompt);
+            _inputOutputConsole.PrintOutput(InputOutputMessages.DoorSelectionPrompt);
 
-            var doorSelection = _customConsole.GetIntInput();
+            var doorSelection = _inputOutputConsole.GetIntInput();
             while (!InputValidation.IsValidDoorSelection(doorSelection))
             {
-                _customConsole.PrintOutput(IOMessages.InvalidInputMessage);
-                doorSelection = _customConsole.GetIntInput();
+                _inputOutputConsole.PrintOutput(InputOutputMessages.InvalidInputMessage);
+                doorSelection = _inputOutputConsole.GetIntInput();
             }
             return doorSelection;
         }
@@ -48,7 +48,7 @@ namespace MontyHallKata.Views
             {
                 outputString += $"#Door {i + 1}#\t#{(doors[i].IsSelected ? "Selected" : doors[i].IsOpen ? "Open" : "Closed")}#\n";
             }
-            _customConsole.PrintOutput(outputString);
+            _inputOutputConsole.PrintOutput(outputString);
         }
         
         public int GetPlayerInput(bool doorSelected , bool choiceMade)
@@ -70,13 +70,13 @@ namespace MontyHallKata.Views
             switch (gameStatus)
             {
                 case GameStatus.Quit:
-                    _customConsole.PrintOutput(IOMessages.QuitOutputMessage);
+                    _inputOutputConsole.PrintOutput(InputOutputMessages.QuitOutputMessage);
                     break;
                 case GameStatus.Lost:
-                    _customConsole.PrintOutput(IOMessages.LosingOutputMessage);
+                    _inputOutputConsole.PrintOutput(InputOutputMessages.LosingOutputMessage);
                     break;
                 case GameStatus.Won: 
-                    _customConsole.PrintOutput(IOMessages.WinningOutputMessage);
+                    _inputOutputConsole.PrintOutput(InputOutputMessages.WinningOutputMessage);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

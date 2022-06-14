@@ -1,6 +1,6 @@
 namespace MontyHallKata.Views.Console
 {
-    public interface IConsole
+    public interface IInputOutput 
     {
         public string GetStringInput();
 

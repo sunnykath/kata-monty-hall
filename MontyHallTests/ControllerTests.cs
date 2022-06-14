@@ -12,13 +12,13 @@ namespace MontyHallTests
     {
         private readonly Controller _controller;
         private readonly CustomRandomizer _randomizer;
-        private readonly Mock<IConsole> _mockedConsole;
+        private readonly Mock<IInputOutput> _mockedConsole;
         private readonly Mock<IRandomizer> _mockedRandomizer;
 
         public ControllerTests()
         {
             _mockedRandomizer = new Mock<IRandomizer>();
-            _mockedConsole = new Mock<IConsole>();
+            _mockedConsole = new Mock<IInputOutput>();
             _controller = new Controller(_mockedConsole.Object);
             _randomizer = new CustomRandomizer();
         }
@@ -27,7 +27,7 @@ namespace MontyHallTests
         public void GivenAMontyHallController_WhenPlayIsCalled_ThenTheUserShouldBeGivenTheOptionToQuitByInputtingZero()
         {
             // Arrange
-            const string expectedOutput = IOMessages.QuitOutputMessage;
+            const string expectedOutput = InputOutputMessages.QuitOutputMessage;
             
             _mockedConsole.Setup(console => console.GetIntInput())
                 .Returns(0);
@@ -123,7 +123,7 @@ namespace MontyHallTests
         public void GivenTheUserHasSelectedADoor_WhenOneOfTheRemainingDoorsOpens_ThenTheUserShouldBeAbleToSwitchOrStayWithTheirInitialSelection()
         {
             // Arrange 
-            const string expectedPromptOutput = IOMessages.ChoicePromptMessage;
+            const string expectedPromptOutput = InputOutputMessages.ChoicePromptMessage;
             const string expectedDoorsOutput = "#Door 1#\t#Closed#\n" +
                                                "#Door 2#\t#Selected#\n" +
                                                "#Door 3#\t#Open#\n"; 
@@ -154,7 +154,7 @@ namespace MontyHallTests
         public void GivenOneOfTheRemainingDoorsHasOpened_WhenTheUserHasMadeTheirChoice_ThenTheResultOfTheGameShouldBeRevealed()
         {
             // Arrange
-            const string expectedResult = IOMessages.WinningOutputMessage;
+            const string expectedResult = InputOutputMessages.WinningOutputMessage;
             
             _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]

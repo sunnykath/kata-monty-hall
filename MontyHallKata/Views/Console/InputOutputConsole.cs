@@ -1,8 +1,6 @@
-using MontyHallKata.Models;
-
 namespace MontyHallKata.Views.Console
 {
-    public class CustomConsole : IConsole
+    public class InputOutputConsole : IInputOutput
     {
         public string GetStringInput()
         {

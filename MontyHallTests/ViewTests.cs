@@ -8,17 +8,17 @@ namespace MontyHallTests
 {
     public class ViewTests
     {
-        private readonly Mock<IConsole> _mockedConsole;
+        private readonly Mock<IInputOutput> _mockedConsole;
         private readonly View _view;
         public ViewTests()
         {
-            _mockedConsole = new Mock<IConsole>();
+            _mockedConsole = new Mock<IInputOutput>();
             _view = new View(_mockedConsole.Object);
         }
         
         [Theory]
-        [InlineData(GameStatus.Won, IOMessages.WinningOutputMessage)]
-        [InlineData(GameStatus.Lost, IOMessages.LosingOutputMessage)]
+        [InlineData(GameStatus.Won, InputOutputMessages.WinningOutputMessage)]
+        [InlineData(GameStatus.Lost, InputOutputMessages.LosingOutputMessage)]
         public void GivenTheGameWonBooleanIsPassedIn_WhenTheValueChanges_ThenTheOutputMessageShouldChangeAccordingly(GameStatus gameStatus, string expectedOutputMessage)
         {
             // Arrange 
@@ -37,7 +37,7 @@ namespace MontyHallTests
             const int expectedChoice = 1;
             _mockedConsole.Setup(console => console.GetIntInput())
                 .Returns(expectedChoice);
-            _mockedConsole.Setup(console => console.PrintOutput(IOMessages.ChoicePromptMessage))
+            _mockedConsole.Setup(console => console.PrintOutput(InputOutputMessages.ChoicePromptMessage))
                 .Verifiable();
             
             // Act 
@@ -55,7 +55,7 @@ namespace MontyHallTests
             const int expectedDoorSelection = 2;
             _mockedConsole.Setup(console => console.GetIntInput())
                 .Returns(expectedDoorSelection);
-            _mockedConsole.Setup(console => console.PrintOutput(IOMessages.DoorSelectionPrompt))
+            _mockedConsole.Setup(console => console.PrintOutput(InputOutputMessages.DoorSelectionPrompt))
                 .Verifiable();
             
             // Act 
@@ -70,7 +70,7 @@ namespace MontyHallTests
         public void GivenTheMontyHallView_WhenOutputQuitMessageIsCalled_ThenTheCorrectQuitMessageShouldBeOutputted()
         {
             // Arrange
-            _mockedConsole.Setup(console => console.PrintOutput(IOMessages.QuitOutputMessage))
+            _mockedConsole.Setup(console => console.PrintOutput(InputOutputMessages.QuitOutputMessage))
                 .Verifiable();
             
             // Act 
@@ -126,7 +126,7 @@ namespace MontyHallTests
             _mockedConsole.SetupSequence(c => c.GetIntInput())
                 .Returns(invalidDoorSelection)
                 .Returns(quitCommand);
-            _mockedConsole.Setup(console => console.PrintOutput(IOMessages.InvalidInputMessage))
+            _mockedConsole.Setup(console => console.PrintOutput(InputOutputMessages.InvalidInputMessage))
                 .Verifiable();
             
             // Act

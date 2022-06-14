@@ -1,5 +1,4 @@
-﻿using System;
-using MontyHallKata.Controllers;
+﻿using MontyHallKata.Controllers;
 using MontyHallKata.Models.Randomizer;
 using MontyHallKata.Views.Console;
 
@@ -10,7 +9,7 @@ namespace MontyHallKata
         public static void Main()
         {
             var randomizer = new CustomRandomizer();
-            var console = new CustomConsole();
+            var console = new InputOutputConsole();
             
             // Get user input and ask for simulations or play through
             console.PrintOutput("What would you like to do?\n" +
@@ -50,10 +49,6 @@ namespace MontyHallKata
                     
                     break;
             }
-            
-
-
-
         }
     }
     

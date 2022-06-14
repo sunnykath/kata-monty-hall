@@ -17,10 +17,10 @@ namespace MontyHallKata.Controllers
         private bool _doorSelected = false;
         private bool _choiceMade = false;
 
-        public Controller(IConsole console)
+        public Controller(IInputOutput inputOutput)
         {
             _gameStatus = GameStatus.Playing;
-            _view = new View(console);
+            _view = new View(inputOutput);
         }
 
         public void Play(IRandomizer randomizer)
