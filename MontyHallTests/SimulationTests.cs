@@ -1,5 +1,3 @@
-using System;
-using MontyHallKata;
 using MontyHallKata.Controllers;
 using MontyHallKata.Models;
 using MontyHallKata.Models.Entity;

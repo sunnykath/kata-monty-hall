@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using MontyHallKata;
 using MontyHallKata.Controllers;
 using MontyHallKata.Models;
 using MontyHallKata.Models.Entity;

@@ -1,4 +1,3 @@
-using MontyHallKata.Models;
 using MontyHallKata.Models.Entity;
 using MontyHallKata.Models.Randomizer;
 using MontyHallKata.Views;
@@ -11,11 +10,11 @@ namespace MontyHallKata.Controllers
         private const int IndexAdjustment = 1;
         
         private Gameplay? _game;
-        private View _view;
+        private readonly View _view;
         private GameStatus _gameStatus;
         
-        private bool _doorSelected = false;
-        private bool _choiceMade = false;
+        private bool _doorSelected;
+        private bool _choiceMade;
 
         public Controller(IInputOutput inputOutput)
         {
@@ -57,19 +56,19 @@ namespace MontyHallKata.Controllers
             }
             else
             {
-                _gameStatus = _game.HasWonGame() ? GameStatus.Won : GameStatus.Lost;
+                _gameStatus = _game!.HasWonGame() ? GameStatus.Won : GameStatus.Lost;
             }
         }
 
         private void HandleChoiceSelection(int choice)
         {
             if (choice != 2) return;
-            _game.SwitchDoorSelection();
+            _game!.SwitchDoorSelection();
         }
 
         private void HandleDoorSelection(int doorSelection)
         {
-            _game.SetSelectedDoor(doorSelection - IndexAdjustment);
+            _game!.SetSelectedDoor(doorSelection - IndexAdjustment);
             _game.OpenAnUnselectedLosingDoor();
         }
     }
