@@ -154,7 +154,7 @@ namespace MontyHallTests
         public void GivenOneOfTheRemainingDoorsHasOpened_WhenTheUserHasMadeTheirChoice_ThenTheResultOfTheGameShouldBeRevealed()
         {
             // Arrange
-            const string expectedResult = InputOutputMessages.WinningOutputMessage;
+            const string expectedResult = InputOutputMessages.LosingOutputMessage;
             
             _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
@@ -164,7 +164,7 @@ namespace MontyHallTests
             
             _mockedConsole.SetupSequence(console => console.GetIntInput())
                 .Returns(1)
-                .Returns(2);
+                .Returns(1);
             _mockedConsole.Setup(console => console.PrintOutput(expectedResult))
                 .Verifiable();
         

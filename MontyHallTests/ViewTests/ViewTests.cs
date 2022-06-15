@@ -1,3 +1,4 @@
+using System;
 using MontyHallKata.Models.Entity;
 using MontyHallKata.Views;
 using MontyHallKata.Views.Console;
@@ -48,6 +49,19 @@ namespace MontyHallTests
             _mockedConsole.Verify();
             Assert.Equal(expectedChoice, userChoice);
         }
+
+        [Fact]
+        public void
+            GivenAnInvalidFinalGameStatusIsPassedIn_WhenTheHandleOutputMessageIsCalled_ThenShouldThrowArgumentOutOfRangeException()
+        {
+            // Arrange 
+            var view = new View(new InputOutputConsole());
+            const GameStatus invalidFinalGameStatus = GameStatus.Playing;
+            
+            // Act & Assert 
+            Assert.Throws<ArgumentOutOfRangeException>(() => view.HandleOutputMessage(invalidFinalGameStatus));
+        }
+
         [Fact]
         public void GivenGetUserChoiceIsCalled_WhenTheUserInputsAnInvalidChoice_ThenTheUserShouldBePromptedWithTheInvalidInputMessageAndAskedToInputAgain()
         {
