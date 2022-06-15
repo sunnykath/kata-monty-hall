@@ -19,7 +19,8 @@ namespace MontyHallTests
         [Theory]
         [InlineData(GameStatus.Won, InputOutputMessages.WinningOutputMessage)]
         [InlineData(GameStatus.Lost, InputOutputMessages.LosingOutputMessage)]
-        public void GivenTheGameWonBooleanIsPassedIn_WhenTheValueChanges_ThenTheOutputMessageShouldChangeAccordingly(GameStatus gameStatus, string expectedOutputMessage)
+        [InlineData(GameStatus.Quit, InputOutputMessages.QuitOutputMessage)]
+        public void GivenTheGameStatusIsPassedIn_WhenTheValueChanges_ThenTheOutputMessageShouldChangeAccordingly(GameStatus gameStatus, string expectedOutputMessage)
         {
             // Arrange 
             _mockedConsole.Setup(console => console.PrintOutput(expectedOutputMessage));
@@ -84,20 +85,6 @@ namespace MontyHallTests
             Assert.Equal(expectedDoorSelection, doorSelection);
         }
         
-        [Fact]
-        public void GivenTheMontyHallView_WhenOutputQuitMessageIsCalled_ThenTheCorrectQuitMessageShouldBeOutputted()
-        {
-            // Arrange
-            _mockedConsole.Setup(console => console.PrintOutput(InputOutputMessages.QuitOutputMessage))
-                .Verifiable();
-            
-            // Act 
-            _view.HandleOutputMessage(GameStatus.Quit);
-            
-            // Assert
-            _mockedConsole.Verify();
-        }
-
         [Fact]
         public void GivenTheMontyHallView_WhenTheDoorsArePrinted_ThenTheDoorsShouldBePrintedCorrectlyWithTheirStatus()
         {
