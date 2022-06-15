@@ -11,7 +11,7 @@ namespace MontyHallTests
     public class ControllerTests
     {
         private readonly Controller _controller;
-        private readonly CustomRandomizer _randomizer;
+        private readonly DefaultRandomizer _randomizer;
         private readonly Mock<IInputOutput> _mockedConsole;
         private readonly Mock<IRandomizer> _mockedRandomizer;
 
@@ -20,7 +20,7 @@ namespace MontyHallTests
             _mockedRandomizer = new Mock<IRandomizer>();
             _mockedConsole = new Mock<IInputOutput>();
             _controller = new Controller(_mockedConsole.Object);
-            _randomizer = new CustomRandomizer();
+            _randomizer = new DefaultRandomizer();
         }
         
         [Fact]

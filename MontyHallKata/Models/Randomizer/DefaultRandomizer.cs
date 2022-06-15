@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace MontyHallKata.Models.Randomizer
 {
-    public class CustomRandomizer : IRandomizer
+    public class DefaultRandomizer : IRandomizer
     {
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
         public T[] GetRandomizedArray<T>(T[] array)
         {
             return array.OrderBy(_ => _random.Next()).ToArray();

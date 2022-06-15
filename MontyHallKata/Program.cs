@@ -11,7 +11,7 @@ namespace MontyHallKata
         private const int Quit = 0;
         public static void Main()
         {
-            var randomizer = new CustomRandomizer();
+            var randomizer = new DefaultRandomizer();
             var console = new InputOutputConsole();
             
             console.PrintOutput(InputOutputMessages.InitialChoicePrompt);

@@ -14,7 +14,7 @@ namespace MontyHallTests
         private readonly Gameplay _game;
         public GameplayTests()
         {
-            var randomizer = new CustomRandomizer();
+            var randomizer = new DefaultRandomizer();
             _game = new Gameplay(randomizer);
         }
         
