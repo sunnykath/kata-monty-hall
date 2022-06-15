@@ -6,19 +6,20 @@ namespace MontyHallKata
 {
     public static class Program
     {
+        private const int Simulation = 1;
+        private const int PlayThrough = 2;
+        private const int Quit = 0;
         public static void Main()
         {
             var randomizer = new CustomRandomizer();
             var console = new InputOutputConsole();
             
-            // Get user input and ask for simulations or play through
             console.PrintOutput(InputOutputMessages.InitialChoicePrompt);
             var consoleInput =  console.GetIntInput();
 
             switch (consoleInput)
             { 
-                case 1:
-                    // Simulation
+                case Simulation:
                     var simulation = new SimulationGenerator(randomizer);
             
                     console.PrintOutput(InputOutputMessages.NumberOfSimulationsPrompt);
@@ -35,15 +36,12 @@ namespace MontyHallKata
 
                     break;
                 
-                case 2:
-                    // Play through
+                case PlayThrough:
                     var game = new Controller(console);
-            
                     game.Play(randomizer);
                     break;
                 
-                case 0:
-                    
+                case Quit:
                     break;
             }
         }
