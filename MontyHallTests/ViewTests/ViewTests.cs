@@ -47,6 +47,24 @@ namespace MontyHallTests
             _mockedConsole.Verify();
             Assert.Equal(expectedChoice, userChoice);
         }
+        [Fact]
+        public void GivenGetUserChoiceIsCalled_WhenTheUserInputsAnInvalidChoice_ThenTheUserShouldBePromptedWithTheInvalidInputMessageAndAskedToInputAgain()
+        {
+            // Arrange
+            const int invalidChoice = 6;
+            const int expectedChoice = 1;
+            _mockedConsole.SetupSequence(console => console.GetIntInput())
+                .Returns(invalidChoice)
+                .Returns(expectedChoice);
+            _mockedConsole.Setup(console => console.PrintOutput(InputOutputMessages.InvalidInputMessage))
+                .Verifiable();
+            
+            // Act 
+            _view.GetUserChoice();
+            
+            // Assert
+            _mockedConsole.Verify();
+        }
 
         [Fact]
         public void GivenTheMontyHallView_WhenGetDoorSelectionIsCalled_TheUserShouldBePromptedToSelectADoorAndTheChoiceShouldBeReturned()
@@ -65,7 +83,7 @@ namespace MontyHallTests
             _mockedConsole.Verify();
             Assert.Equal(expectedDoorSelection, doorSelection);
         }
-
+        
         [Fact]
         public void GivenTheMontyHallView_WhenOutputQuitMessageIsCalled_ThenTheCorrectQuitMessageShouldBeOutputted()
         {
