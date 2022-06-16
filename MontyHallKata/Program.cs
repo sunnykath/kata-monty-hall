@@ -1,6 +1,6 @@
 ﻿using MontyHallKata.Controllers;
 using MontyHallKata.Models.Randomizer;
-using MontyHallKata.Views.Console;
+using MontyHallKata.Views.InputOutput;
 
 namespace MontyHallKata
 {

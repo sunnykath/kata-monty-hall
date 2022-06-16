@@ -1,7 +1,7 @@
 using System;
 using MontyHallKata.Models;
 using MontyHallKata.Models.Entity;
-using MontyHallKata.Views.Console;
+using MontyHallKata.Views.InputOutput;
 
 namespace MontyHallKata.Views
 {

@@ -5,7 +5,7 @@ using MontyHallKata.Models.Randomizer;
 using Moq;
 using Xunit;
 
-namespace MontyHallTests
+namespace MontyHallTests.ControllersTest
 {
     public class SimulationTests
     {

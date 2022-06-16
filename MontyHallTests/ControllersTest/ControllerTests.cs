@@ -2,11 +2,11 @@ using MontyHallKata.Controllers;
 using MontyHallKata.Models;
 using MontyHallKata.Models.Entity;
 using MontyHallKata.Models.Randomizer;
-using MontyHallKata.Views.Console;
+using MontyHallKata.Views.InputOutput;
 using Moq;
 using Xunit;
 
-namespace MontyHallTests
+namespace MontyHallTests.ControllersTest
 {
     public class ControllerTests
     {

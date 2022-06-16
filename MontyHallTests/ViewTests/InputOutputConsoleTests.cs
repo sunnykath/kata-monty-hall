@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using MontyHallKata.Views.Console;
+using MontyHallKata.Views.InputOutput;
 using Xunit;
 
-namespace MontyHallTests
+namespace MontyHallTests.ViewTests
 {
     public class CustomConsoleTests
     {

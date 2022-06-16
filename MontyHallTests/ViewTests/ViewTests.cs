@@ -1,11 +1,11 @@
 using System;
 using MontyHallKata.Models.Entity;
 using MontyHallKata.Views;
-using MontyHallKata.Views.Console;
+using MontyHallKata.Views.InputOutput;
 using Moq;
 using Xunit;
 
-namespace MontyHallTests
+namespace MontyHallTests.ViewTests
 {
     public class ViewTests
     {

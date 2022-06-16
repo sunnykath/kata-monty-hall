@@ -36,11 +36,6 @@ namespace MontyHallKata.Controllers
             var losingDoor = Array.Find(RandomlyOrderedDoors, door => !DoorsFactory.IsWinningDoor(door) && !DoorsFactory.IsDoorSelected(door))!;
             DoorsFactory.OpenDoor(losingDoor);
         }
-        
-        private bool HasADoorBeenSelected()
-        {
-            return RandomlyOrderedDoors.Any(DoorsFactory.IsDoorSelected);
-        }
 
         public void SwitchDoorSelection()
         {
@@ -54,6 +49,11 @@ namespace MontyHallKata.Controllers
         public bool HasWonGame()
         {
             return GetSelectedDoor().IsWinningDoor;
+        }
+        
+        private bool HasADoorBeenSelected()
+        {
+            return RandomlyOrderedDoors.Any(DoorsFactory.IsDoorSelected);
         }
     }
 }

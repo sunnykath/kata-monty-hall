@@ -5,7 +5,7 @@ namespace MontyHallKata.Models.Randomizer
 {
     public class DefaultRandomizer : IRandomizer
     {
-        private readonly Random _random = new Random();
+        private readonly Random _random = new();
         public T[] GetRandomizedArray<T>(T[] array)
         {
             return array.OrderBy(_ => _random.Next()).ToArray();

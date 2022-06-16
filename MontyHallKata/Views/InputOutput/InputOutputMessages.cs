@@ -1,4 +1,4 @@
-namespace MontyHallKata.Views.Console
+namespace MontyHallKata.Views.InputOutput
 {
     public static class InputOutputMessages
     {
