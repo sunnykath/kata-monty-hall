@@ -6,21 +6,12 @@ namespace MontyHallKata.Models
     {
         public static Door CreateWinningDoor()
         {
-            var winningDoor = new Door
-            {
-                IsWinningDoor = true
-            };
-            return winningDoor;
+            return new Door {IsWinningDoor = true};
         }
         public static Door CreateLosingDoor()
         {
-            var winningDoor = new Door
-            {
-                IsWinningDoor = false
-            };
-            return winningDoor;
+            return new Door {IsWinningDoor = false};
         }
-
         public static void OpenDoor(Door door)
         {
             door.IsOpen = true;
@@ -29,7 +20,6 @@ namespace MontyHallKata.Models
         {
             return door.IsOpen;
         }
-
         public static void SelectDoor(Door door)
         {
             door.IsSelected = true;
@@ -42,7 +32,6 @@ namespace MontyHallKata.Models
         {
             return door.IsSelected;
         }
-
         public static bool IsWinningDoor(Door door)
         {
             return door.IsWinningDoor;
