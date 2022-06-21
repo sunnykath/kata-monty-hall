@@ -15,6 +15,13 @@ namespace MontyHallKata.Views.InputOutput
             return inputInt;
         }
 
+        public void PrintSimulationResults(int stayWinningPercentage, int switchWinningPercentage)
+        {
+            PrintOutput("After a 1000 simulations of each strategy, here are the results:\n");
+            PrintOutput($"Stay Winning Percentage: {stayWinningPercentage}%\n");
+            PrintOutput($"Switch Winning Percentage: {switchWinningPercentage}%\n");
+        }
+        
         public void PrintOutput(string outputString)
         {
             System.Console.Write(outputString);

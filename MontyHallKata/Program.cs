@@ -21,20 +21,7 @@ namespace MontyHallKata
             switch (consoleInput)
             { 
                 case Simulation:
-                    var simulation = new SimulationGenerator(randomizer);
-            
-                    console.PrintOutput(InputOutputMessages.NumberOfSimulationsPrompt);
-                    var numberOfSimulations = console.GetIntInput();
-                    
-                    simulation.Simulate(numberOfSimulations, Choices.Stay);
-                    var stayWinningPercentage = simulation.GetWinningPercentage();
-                    simulation.Simulate(numberOfSimulations, Choices.Switch);
-                    var switchWinningPercentage = simulation.GetWinningPercentage();
-            
-                    console.PrintOutput("After a 1000 simulations of each strategy, here are the results:\n");
-                    console.PrintOutput($"Stay Winning Percentage: {stayWinningPercentage}%\n");
-                    console.PrintOutput($"Switch Winning Percentage: {switchWinningPercentage}%\n");
-
+                    SimulateMontyHall(randomizer, console);
                     break;
                 
                 case PlayThrough:
@@ -45,6 +32,21 @@ namespace MontyHallKata
                 case Quit:
                     break;
             }
+        }
+
+        private static void SimulateMontyHall(IRandomizer randomizer, IInputOutput console)
+        {
+            var simulation = new SimulationGenerator(randomizer);
+            
+            console.PrintOutput(InputOutputMessages.NumberOfSimulationsPrompt);
+            var numberOfSimulations = console.GetIntInput();
+                    
+            simulation.Simulate(numberOfSimulations, Choices.Stay);
+            var stayWinningPercentage = simulation.GetWinningPercentage();
+            simulation.Simulate(numberOfSimulations, Choices.Switch);
+            var switchWinningPercentage = simulation.GetWinningPercentage();
+            
+            console.PrintSimulationResults(stayWinningPercentage, switchWinningPercentage);
         }
     }
     
