@@ -1,4 +1,5 @@
 ﻿using MontyHallKata.Controllers;
+using MontyHallKata.Models.Entity;
 using MontyHallKata.Models.Randomizer;
 using MontyHallKata.Views.InputOutput;
 
@@ -25,9 +26,9 @@ namespace MontyHallKata
                     console.PrintOutput(InputOutputMessages.NumberOfSimulationsPrompt);
                     var numberOfSimulations = console.GetIntInput();
                     
-                    simulation.Simulate(numberOfSimulations, "stay");
+                    simulation.Simulate(numberOfSimulations, Choices.Stay);
                     var stayWinningPercentage = simulation.GetWinningPercentage();
-                    simulation.Simulate(numberOfSimulations, "switch");
+                    simulation.Simulate(numberOfSimulations, Choices.Switch);
                     var switchWinningPercentage = simulation.GetWinningPercentage();
             
                     console.PrintOutput("After a 1000 simulations of each strategy, here are the results:\n");

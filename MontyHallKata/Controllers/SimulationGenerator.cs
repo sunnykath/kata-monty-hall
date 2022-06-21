@@ -1,3 +1,4 @@
+using MontyHallKata.Models.Entity;
 using MontyHallKata.Models.Randomizer;
 
 namespace MontyHallKata.Controllers
@@ -14,7 +15,7 @@ namespace MontyHallKata.Controllers
             _randomizer = randomizer;
         }
 
-        public void Simulate(int numberOfSimulations, string choice)
+        public void Simulate(int numberOfSimulations, Choices choice)
         {
             var gamesWon = 0;
             for (var i = 0; i < numberOfSimulations; i++)
@@ -40,9 +41,9 @@ namespace MontyHallKata.Controllers
             return _winningPercentage;
         }
 
-        private void HandleChoice(string choice)
+        private void HandleChoice(Choices choice)
         {
-            if (choice.ToLower().Equals("switch"))
+            if (choice.Equals(Choices.Switch))
             {
                 _game!.SwitchDoorSelection();
             }

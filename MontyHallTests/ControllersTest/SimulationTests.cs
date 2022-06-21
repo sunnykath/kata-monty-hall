@@ -25,9 +25,9 @@ namespace MontyHallTests.ControllersTest
         }
 
         [Theory]
-        [InlineData("stay", 100)]
-        [InlineData("switch", 0)]
-        public void GivenAMontyHallGame_WhenSimulatedOnce_ThenShouldCalculateAndReturnWinningPercentageCorrectly(string choice, int expectedWinningPercentage)
+        [InlineData(Choices.Stay, 100)]
+        [InlineData(Choices.Switch, 0)]
+        public void GivenAMontyHallGame_WhenSimulatedOnce_ThenShouldCalculateAndReturnWinningPercentageCorrectly(Choices choice, int expectedWinningPercentage)
         {
             // Arrange
             const int doorSelection = 1;
@@ -45,9 +45,9 @@ namespace MontyHallTests.ControllersTest
         }
 
         [Theory]
-        [InlineData("stay", 30)]
-        [InlineData("switch", 70)]
-        public void GivenAMontyHallGame_WhenSimulatedTenTimes_ThenShouldCalculateAndReturnTheWinningPercentageCorrectly(string choice, int expectedWinningPercentage)
+        [InlineData(Choices.Stay, 30)]
+        [InlineData(Choices.Switch, 70)]
+        public void GivenAMontyHallGame_WhenSimulatedTenTimes_ThenShouldCalculateAndReturnTheWinningPercentageCorrectly(Choices choice, int expectedWinningPercentage)
         {
             // Arrange
             const int initialWinningDoorSelection = 1;
