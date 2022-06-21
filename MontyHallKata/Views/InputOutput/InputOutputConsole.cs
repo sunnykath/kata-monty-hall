@@ -22,7 +22,7 @@ namespace MontyHallKata.Views.InputOutput
         
         private string GetStringInput()
         {
-            string? inputString;
+            var inputString = "";
             do
             {
                 inputString = System.Console.ReadLine();
