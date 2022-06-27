@@ -8,6 +8,9 @@ namespace MontyHallKata.Controllers
     public class Controller
     {
         private const int IndexAdjustment = 1;
+
+        private const int Stay = 2;
+        private const int Quit = 0;
         
         private Gameplay? _game;
         private readonly View _view;
@@ -40,7 +43,7 @@ namespace MontyHallKata.Controllers
 
         private void HandleGameStatus(int playerInput)
         {
-            if (playerInput == 0)
+            if (playerInput == Quit)
             {
                 _gameStatus = GameStatus.Quit;
             }
@@ -62,7 +65,7 @@ namespace MontyHallKata.Controllers
 
         private void HandleChoiceSelection(int choice)
         {
-            if (choice != 2) return;
+            if (choice != Stay) return;
             _game!.SwitchDoorSelection();
         }
 
