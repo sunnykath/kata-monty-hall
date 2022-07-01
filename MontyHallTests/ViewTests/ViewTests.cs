@@ -1,4 +1,5 @@
 using System;
+using MontyHallKata.Models.Doors;
 using MontyHallKata.Models.Entity;
 using MontyHallKata.Views;
 using MontyHallKata.Views.InputOutput;
@@ -103,23 +104,15 @@ namespace MontyHallTests.ViewTests
         public void GivenTheMontyHallView_WhenTheDoorsArePrinted_ThenTheDoorsShouldBePrintedCorrectlyWithTheirStatus()
         {
             // Arrange
-            var selectedDoor = new Door
-            {
-                IsSelected = true,
-                IsOpen = false
-            };
-            var openDoor = new Door
-            {
-                IsSelected = false,
-                IsOpen = true
-            };
-            var closedDoor = new Door
-            {
-                IsOpen = false,
-                IsSelected = false
-            };
+            var selectedDoor = new WinningDoor();
+            selectedDoor.SelectDoor();
 
-            var doors = new[] {closedDoor, selectedDoor, openDoor};
+            var openDoor = new LoosingDoor();
+            openDoor.OpenDoor();
+
+            var closedDoor = new LoosingDoor();
+
+            var doors = new Door[] {closedDoor, selectedDoor, openDoor};
             
             const string expectedDoorsOutput = "#Door 1#\t#Closed#\n" +
                                                 "#Door 2#\t#Selected#\n" +

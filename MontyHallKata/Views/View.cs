@@ -1,5 +1,6 @@
 using System;
 using MontyHallKata.Models;
+using MontyHallKata.Models.Doors;
 using MontyHallKata.Models.Entity;
 using MontyHallKata.Views.InputOutput;
 
@@ -46,7 +47,7 @@ namespace MontyHallKata.Views
 
             for (var i = 0; i < doors.Length; i++)
             {
-                outputString += $"#Door {i + 1}#\t#{(doors[i].IsSelected ? "Selected" : doors[i].IsOpen ? "Open" : "Closed")}#\n";
+                outputString += $"#Door {i + 1}#\t#{(doors[i].IsDoorSelected() ? "Selected" : doors[i].IsDoorOpen() ? "Open" : "Closed")}#\n";
             }
             _inputOutputConsole.PrintOutput(outputString);
         }

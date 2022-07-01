@@ -1,5 +1,5 @@
 using MontyHallKata.Controllers;
-using MontyHallKata.Models;
+using MontyHallKata.Models.Doors;
 using MontyHallKata.Models.Entity;
 using MontyHallKata.Models.Randomizer;
 using Moq;
@@ -14,11 +14,12 @@ namespace MontyHallTests.ControllersTest
         
         public SimulationTests()
         {
+            var doorFactory = new DoorsFactory();
             _mockRandomizer = new Mock<IRandomizer>();
             _mockRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
                 {
-                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
+                    doorFactory.CreateLosingDoor(), doorFactory.CreateWinningDoor(), doorFactory.CreateLosingDoor()
                 });
 
             _simulation = new SimulationGenerator(_mockRandomizer.Object);

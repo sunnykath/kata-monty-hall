@@ -1,30 +1,30 @@
 using System;
 using System.Linq;
-using MontyHallKata.Models;
-using MontyHallKata.Models.Entity;
+using MontyHallKata.Models.Doors;
 using MontyHallKata.Models.Randomizer;
 
 namespace MontyHallKata.Controllers
 {
     public class Gameplay
     {
-        private readonly Door[] _defaultDoors = {DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateLosingDoor()};
 
         public readonly Door[] RandomlyOrderedDoors;
 
         public Gameplay(IRandomizer shuffler)
         {
-            RandomlyOrderedDoors = shuffler.GetRandomizedArray(_defaultDoors);
+            var doorFactory = new DoorsFactory();
+            var defaultDoors = new []{doorFactory.CreateWinningDoor(), doorFactory.CreateLosingDoor(), doorFactory.CreateLosingDoor()};
+            RandomlyOrderedDoors = shuffler.GetRandomizedArray(defaultDoors);
         }
         
         public void SetSelectedDoor(int selectedDoor)
         {
-            DoorsFactory.SelectDoor(RandomlyOrderedDoors[selectedDoor]);
+            RandomlyOrderedDoors[selectedDoor].SelectDoor();
         }
 
         public Door GetSelectedDoor()
         {
-            return Array.Find(RandomlyOrderedDoors, DoorsFactory.IsDoorSelected)!;
+            return Array.Find(RandomlyOrderedDoors, door => door.IsDoorSelected())!;
         }
 
         public void OpenAnUnselectedLosingDoor()
@@ -33,27 +33,27 @@ namespace MontyHallKata.Controllers
             {
                 throw new Exception("Please select a door first");
             }
-            var losingDoor = Array.Find(RandomlyOrderedDoors, door => !DoorsFactory.IsWinningDoor(door) && !DoorsFactory.IsDoorSelected(door))!;
-            DoorsFactory.OpenDoor(losingDoor);
+            var losingDoor = Array.Find(RandomlyOrderedDoors, door => !door.IsWinningDoor() && !door.IsDoorSelected())!;
+            losingDoor.OpenDoor();
         }
 
         public void SwitchDoorSelection()
         {
-            var doorToBeSelected = Array.Find(RandomlyOrderedDoors, door => !DoorsFactory.IsDoorOpen(door) && !DoorsFactory.IsDoorSelected(door))!;
+            var doorToBeSelected = Array.Find(RandomlyOrderedDoors, door => !door.IsDoorOpen() && !door.IsDoorSelected())!;
             var oldSelectedDoor = GetSelectedDoor();
 
-            DoorsFactory.SelectDoor(doorToBeSelected);
-            DoorsFactory.DeSelectDoor(oldSelectedDoor);
+            doorToBeSelected.SelectDoor();
+            oldSelectedDoor.DeSelectDoor();
         }
         
         public bool HasWonGame()
         {
-            return GetSelectedDoor().IsWinningDoor;
+            return GetSelectedDoor().IsWinningDoor();
         }
         
         private bool HasADoorBeenSelected()
         {
-            return RandomlyOrderedDoors.Any(DoorsFactory.IsDoorSelected);
+            return RandomlyOrderedDoors.Any(door => door.IsDoorSelected());
         }
     }
 }

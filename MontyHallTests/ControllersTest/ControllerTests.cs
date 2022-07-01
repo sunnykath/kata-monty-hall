@@ -1,6 +1,5 @@
 using MontyHallKata.Controllers;
-using MontyHallKata.Models;
-using MontyHallKata.Models.Entity;
+using MontyHallKata.Models.Doors;
 using MontyHallKata.Models.Randomizer;
 using MontyHallKata.Views.InputOutput;
 using Moq;
@@ -14,6 +13,7 @@ namespace MontyHallTests.ControllersTest
         private readonly DefaultRandomizer _randomizer;
         private readonly Mock<IInputOutput> _mockedConsole;
         private readonly Mock<IRandomizer> _mockedRandomizer;
+        private readonly DoorsFactory _doorFactory;
 
         public ControllerTests()
         {
@@ -21,6 +21,7 @@ namespace MontyHallTests.ControllersTest
             _mockedConsole = new Mock<IInputOutput>();
             _controller = new Controller(_mockedConsole.Object);
             _randomizer = new DefaultRandomizer();
+            _doorFactory = new DoorsFactory();
         }
         
         [Fact]
@@ -69,7 +70,7 @@ namespace MontyHallTests.ControllersTest
             _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
                 {
-                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
+                    _doorFactory.CreateLosingDoor(), _doorFactory.CreateWinningDoor(), _doorFactory.CreateLosingDoor()
                 });
             
             const string expectedOutput = "#Door 1#\t#Selected#\n"+
@@ -97,7 +98,7 @@ namespace MontyHallTests.ControllersTest
             _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
                 {
-                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor()
+                    _doorFactory.CreateWinningDoor(), _doorFactory.CreateLosingDoor(), _doorFactory.CreateLosingDoor()
                 });
             
             const string expectedOutput = "#Door 1#\t#Selected#\n"+
@@ -140,7 +141,7 @@ namespace MontyHallTests.ControllersTest
             _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
                 {
-                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
+                    _doorFactory.CreateLosingDoor(), _doorFactory.CreateWinningDoor(), _doorFactory.CreateLosingDoor()
                 });
         
             // Act
@@ -159,7 +160,7 @@ namespace MontyHallTests.ControllersTest
             _mockedRandomizer.Setup(randomizer => randomizer.GetRandomizedArray(It.IsAny<Door[]>()))
                 .Returns(() => new[]
                 {
-                    DoorsFactory.CreateLosingDoor(), DoorsFactory.CreateWinningDoor(), DoorsFactory.CreateLosingDoor()
+                    _doorFactory.CreateLosingDoor(), _doorFactory.CreateWinningDoor(), _doorFactory.CreateLosingDoor()
                 });
             
             _mockedConsole.SetupSequence(console => console.GetIntInput())
